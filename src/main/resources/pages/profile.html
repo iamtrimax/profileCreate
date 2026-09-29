@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profile · LinkHub VN</title>
+  <script src="/assets/theme.js"></script>
+  <link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/templates.css">
+  <link rel="stylesheet" href="/assets/dark-mode.css">
+  <link rel="stylesheet" href="/assets/landing.css">
+  <link rel="stylesheet" href="/assets/landing-effects.css">
+  <link rel="stylesheet" href="/assets/block-reveal.css"><link rel="stylesheet" href="/assets/booking.css">
+  <script src="/assets/profile.js" type="module"></script>
+</head>
+<body class="profile-surface" data-template="CLASSIC">
+<header><a class="brand" href="/">LinkHub<span>VN</span></a><div class="header-actions"><a href="/app">Tạo trang của bạn →</a><button type="button" class="secondary theme-toggle" data-theme-toggle aria-pressed="false" hidden><span data-theme-icon aria-hidden="true">☾</span> Chế độ tối</button></div></header>
+<main class="public">
+  <div id="notice" role="status" aria-live="polite" hidden></div>
+  <nav id="landing-nav" class="landing-nav" aria-label="Các mục trên trang"></nav>
+  <div class="profile-layout">
+    <section class="card profile-hero">
+      <div id="avatar" class="avatar"></div><p class="eyebrow" id="username"></p>
+      <h1 id="name" class="profile-name">Đang tải profile…</h1><p id="bio" class="preserve"></p><div id="socials" class="socials"></div>
+      <a class="hero-cta" href="#contact-section">Trao đổi nhu cầu →</a>
+    </section>
+    <div id="landing-intro" class="landing-content" hidden></div>
+    <section id="services-section" class="card profile-services"><p class="eyebrow">MÌNH CÓ THỂ GIÚP BẠN</p><h2>Dịch vụ</h2><div id="services"></div></section>
+    <div id="landing-details" class="landing-content" hidden></div>
+    <section id="contact-section" class="card profile-contact">
+      <p class="eyebrow">BẮT ĐẦU MỘT KẾT NỐI</p><h2>Gửi yêu cầu</h2>
+      <p class="muted">Chia sẻ điều bạn cần. Chủ profile sẽ nhận yêu cầu trong hộp thư của họ.</p>
+      <form id="contact-form">
+        <label>Tên của bạn<input name="name" required maxlength="100" autocomplete="name"></label>
+        <label>Email để phản hồi<input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+        <label>Bạn cần hỗ trợ gì?<textarea name="message" rows="5" required maxlength="4000"></textarea></label>
+        <button type="submit">Gửi yêu cầu →</button>
+      </form>
+    </section>
+    <section class="qr-card"><img id="qr" width="160" height="160" alt="QR của profile"><p>Quét để lưu kết nối này</p></section>
+  </div>
+</main>
+<footer>Được tạo với LinkHub VN</footer>
+</body></html>

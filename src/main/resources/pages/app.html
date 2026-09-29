@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LinkHub VN · Không gian của bạn</title><script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/templates.css"><link rel="stylesheet" href="/assets/dark-mode.css"><link rel="stylesheet" href="/assets/landing.css"><link rel="stylesheet" href="/assets/block-reveal.css"><link rel="stylesheet" href="/assets/booking.css"><link rel="stylesheet" href="/assets/dashboard.css"><script src="/assets/app.js" type="module"></script></head>
+<body class="app-shell"><header><a class="brand" href="/">LinkHub<span>VN</span></a><span>Một đường link. Mọi kết nối.</span><div class="header-actions"><button type="button" class="secondary theme-toggle" data-theme-toggle aria-pressed="false" hidden><span data-theme-icon aria-hidden="true">☾</span> Chế độ tối</button><button id="logout" class="secondary" hidden>Đăng xuất</button></div></header>
+<main><div id="notice" role="status" aria-live="polite" hidden></div>
+<section id="auth" class="auth-layout"><div class="intro"><p class="eyebrow">DÀNH CHO NGƯỜI LÀM NGHỀ ĐỘC LẬP</p><h1>Một nơi để<br>khách hàng<br><em>tìm thấy bạn.</em></h1><p>Giới thiệu bản thân, chia sẻ dịch vụ và nhận yêu cầu — chỉ với một đường link riêng.</p><div class="pill">Profile cá nhân · Dịch vụ · Kết nối</div></div>
+<div class="card"><div class="tabs"><button id="show-login">Đăng nhập</button><button id="show-register" class="secondary">Tạo tài khoản</button></div>
+<form id="login-form"><h2>Chào mừng trở lại</h2><label>Email<input name="email" type="email" autocomplete="username" required maxlength="254"></label><label>Mật khẩu<input name="password" type="password" autocomplete="current-password" required maxlength="64"></label><button type="submit">Vào không gian của bạn →</button></form>
+<form id="register-form" hidden><h2>Bắt đầu với LinkHub</h2><label>Tên hiển thị<input name="displayName" required maxlength="100" autocomplete="name"></label><label>Username<input name="username" required pattern="[a-zA-Z0-9][a-zA-Z0-9_]{2,29}" minlength="3" maxlength="30" placeholder="tri" autocomplete="username"></label><small>3–30 ký tự: chữ, số, dấu gạch dưới. Username cố định sau đăng ký.</small><label>Email<input name="email" type="email" required maxlength="254" autocomplete="email"></label><label>Mật khẩu<input name="password" type="password" required minlength="10" maxlength="64" autocomplete="new-password"></label><small>Ít nhất 10 ký tự, tối đa 72 byte UTF-8.</small><button type="submit">Tạo không gian của bạn →</button></form></div></section>
+<section id="dashboard" hidden><div class="heading"><div><p class="eyebrow">KHÔNG GIAN CỦA BẠN</p><h1 id="greeting">Dashboard</h1><a id="public-link" target="_blank" rel="noopener"></a></div><span id="publish-state" class="pill"></span></div>
+<div class="stats"><article class="card"><small>Tổng lượt xem trang</small><strong id="views">0</strong></article><article class="card"><small>Tổng yêu cầu</small><strong id="contacts-count">0</strong></article><article class="card"><small>Yêu cầu chưa đọc</small><strong id="unread">0</strong></article></div>
+<div class="workspace"><div class="workspace-group"><section class="card profile-editor" id="profile-editor"><h2>01 / Profile của bạn</h2><div class="profile-editor-layout">
+<form id="profile-form">
+  <label>Tên hiển thị<input name="displayName" required maxlength="100"></label>
+  <label>Giới thiệu<textarea name="bio" maxlength="2000" rows="4"></textarea></label>
+  <fieldset class="template-fieldset" aria-describedby="template-help">
+    <legend>Mẫu giao diện profile</legend>
+    <p id="template-help" class="muted">Chọn phong cách của bạn. Xem bản xem trước, rồi bấm Lưu profile để áp dụng cho khách truy cập.</p>
+    <div id="template-picker" class="template-grid"></div>
+  </fieldset>
+  <label class="check"><input name="published" type="checkbox"> Xuất bản profile công khai</label>
+  <button type="submit">Lưu profile</button>
+</form>
+<aside class="profile-preview-panel" aria-label="Xem trước và chia sẻ profile"><div class="template-preview-heading"><h3>Xem trước trên điện thoại</h3><span id="template-state" class="muted" role="status" aria-live="polite"></span><button type="button" id="replay-preview" class="secondary">Xem lại hiệu ứng</button></div>
+<div id="template-preview" class="template-preview profile-surface" data-template="CLASSIC" role="region" aria-label="Xem trước giao diện profile" tabindex="0"></div>
+<p class="muted">Bản xem trước không gửi yêu cầu và không tính lượt xem. Mẫu Studio dùng hai cột trên màn hình lớn.</p>
+<div id="qr-box" hidden><h3>QR cá nhân</h3><img id="qr" alt="Mã QR dẫn tới profile" width="160" height="160"><a id="qr-download" download="linkhub-qr.png">Tải QR PNG</a></div></aside></div></section>
+<section class="card" id="links-editor"><h2>02 / Link của bạn</h2><div id="links-list"></div><form id="link-form"><input name="id" type="hidden"><label>Tên link<input name="title" required maxlength="100" placeholder="Facebook, GitHub, portfolio…"></label><label>Đường dẫn<input name="url" type="url" required maxlength="2000" placeholder="https://…"></label><label>Thứ tự<input name="sortOrder" type="number" value="0" min="0" max="10000" required></label><div class="actions"><button type="submit">Lưu link</button><button type="reset" class="secondary">Nhập mới</button></div></form></section>
+<section class="card" id="landing-editor">
+  <h2>Nội dung landing page</h2>
+  <p class="muted">Thêm tối đa 30 mục. Nội dung hiển thị theo nhóm; thứ tự nhỏ hơn đứng trước trong cùng nhóm. Các mẫu Business, Portfolio và Creator có bố cục landing page đầy đủ.</p>
+  <div id="sections-list"></div>
+  <form id="section-form">
+    <input name="id" type="hidden">
+    <label>Loại nội dung<select name="type" required><option value="ABOUT">Giới thiệu</option><option value="FEATURE">Điểm nổi bật</option><option value="PROCESS">Bước trong quy trình</option><option value="PROJECT">Dự án / sản phẩm</option><option value="FAQ">Câu hỏi thường gặp</option></select></label>
+    <label>Tiêu đề / câu hỏi<input name="title" maxlength="120" required></label>
+    <label>Nội dung / câu trả lời<textarea name="body" maxlength="3000" rows="5" required></textarea></label>
+    <label>Link xem thêm (không bắt buộc)<input name="url" type="url" maxlength="2000" placeholder="https://…"></label>
+    <label>Thứ tự trong nhóm<input name="sortOrder" type="number" min="0" max="10000" value="0" required></label>
+    <label class="check"><input name="enabled" type="checkbox" checked> Hiển thị mục này trên profile</label>
+    <p class="muted">Bấm Lưu mục để áp dụng ngay. Nếu profile đang công khai, khách sẽ thấy nội dung mới sau khi tải lại trang.</p>
+    <div class="actions"><button type="submit">Lưu mục</button><button type="reset" class="secondary">Nhập mới</button></div>
+  </form>
+</section>
+<section class="card" id="services-editor"><h2>03 / Dịch vụ</h2><div id="services-list"></div><form id="service-form"><input name="id" type="hidden"><label>Tên dịch vụ<input name="title" required maxlength="100"></label><label>Mô tả<textarea name="description" maxlength="2000" rows="3"></textarea></label><label>Thời lượng (phút)<input name="durationMinutes" type="number" min="15" max="480" value="60" required></label><label>Giá (VND)<input name="price" type="number" min="0" step="0.01" max="9999999999999.99" required></label><div class="actions"><button type="submit">Lưu dịch vụ</button><button type="reset" class="secondary">Nhập mới</button></div></form></section></div>
+<div class="workspace-group"><section class="card" id="inbox-panel"><div class="heading"><h2>Hộp thư yêu cầu</h2><button id="refresh" class="secondary">Làm mới</button></div><div id="inbox"></div><div class="actions"><button id="prev" class="secondary">← Trước</button><span id="page-number"></span><button id="next" class="secondary">Sau →</button></div></section><section class="card" id="analytics-panel"><h2>Lượt xem · 30 ngày gần nhất</h2><p class="muted">Ngày thống kê theo giờ Việt Nam. Tổng lượt xem giữ cả dữ liệu trước khi nâng cấp analytics.</p><div id="daily"></div></section></div></div></section>
+</main><footer>LinkHub VN · Một không gian nhỏ, những kết nối lớn.</footer></body></html>

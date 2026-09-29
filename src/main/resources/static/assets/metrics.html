@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Vận hành · LinkHub VN</title>
+    <script src="/assets/theme.js"></script>
+    <link rel="stylesheet" href="/assets/style.css" />
+    <link rel="stylesheet" href="/assets/dark-mode.css" />
+    <link rel="stylesheet" href="/assets/metrics.css" />
+    <script type="module" src="/assets/metrics.js"></script>
+  </head>
+  <body class="metrics-shell">
+    <header>
+      <a class="brand" href="/app">LinkHub<span>VN</span></a
+      ><span>TRUNG TÂM VẬN HÀNH</span>
+      <div class="actions">
+        <a href="/app">Dashboard cá nhân ↗</a
+        ><button
+          type="button"
+          class="secondary theme-toggle"
+          data-theme-toggle
+          aria-pressed="false"
+          hidden
+        >
+          <span data-theme-icon aria-hidden="true">☾</span> Chế độ tối
+        </button>
+      </div>
+    </header>
+    <main>
+      <div class="heading">
+        <div>
+          <p class="eyebrow">SYSTEM METRICS</p>
+          <h1>Toàn cảnh hệ thống</h1>
+          <p class="muted">
+            Sức khỏe ứng dụng, tài nguyên và hoạt động gửi email.
+          </p>
+        </div>
+        <span id="connection" class="pill">Chưa kết nối</span>
+      </div>
+      <div id="metrics-notice" role="status" aria-live="polite" hidden></div>
+      <section id="connect-panel" class="card connect-panel">
+        <div>
+          <h2>Kết nối giám sát</h2>
+          <p>Nhập token vận hành để xem dữ liệu hệ thống.</p>
+          <p class="muted">
+            Token chỉ được giữ trong bộ nhớ của trang. Tải lại hoặc ngắt kết nối
+            sẽ xóa token.
+          </p>
+        </div>
+        <form id="connect-form">
+          <label for="ops-token">Token vận hành (OPS_TOKEN)</label
+          ><input
+            id="ops-token"
+            type="password"
+            required
+            minlength="32"
+            maxlength="4096"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Nhập token đã cấu hình trên máy chủ"
+          /><button id="connect-button" type="submit">Kết nối →</button>
+        </form>
+      </section>
+      <section id="monitor" hidden aria-label="Số liệu vận hành">
+        <div class="monitor-toolbar">
+          <p id="updated" class="muted">Chưa có dữ liệu</p>
+          <div class="actions">
+            <label class="check"
+              ><input id="auto-refresh" type="checkbox" checked /> Cập nhật mỗi
+              15 giây</label
+            ><button id="refresh-metrics" type="button" class="secondary">
+              Làm mới</button
+            ><button id="disconnect" type="button" class="secondary">
+              Ngắt kết nối
+            </button>
+          </div>
+        </div>
+        <div class="metric-cards">
+          <article class="card">
+            <small>Trạng thái ứng dụng</small
+            ><strong id="health-value">—</strong>
+            <p id="health-detail" class="muted">Database & Redis</p>
+          </article>
+          <article class="card">
+            <small>Bộ nhớ JVM đang dùng</small
+            ><strong id="memory-value">—</strong>
+            <p class="muted">Tổng heap và non-heap</p>
+          </article>
+          <article class="card">
+            <small>CPU tiến trình</small><strong id="cpu-value">—</strong>
+            <p class="muted">Mức sử dụng hiện tại</p>
+          </article>
+          <article class="card">
+            <small>Thời gian hoạt động</small
+            ><strong id="uptime-value">—</strong>
+            <p class="muted">Kể từ lần khởi động gần nhất</p>
+          </article>
+        </div>
+        <div class="metrics-grid">
+          <section class="card memory-panel">
+            <div class="heading">
+              <h2>Bộ nhớ theo thời gian</h2>
+              <span class="pill">MiB</span>
+            </div>
+            <svg
+              id="memory-chart"
+              viewBox="0 0 600 160"
+              role="img"
+              aria-labelledby="chart-title"
+            >
+              <title id="chart-title">
+                Bộ nhớ JVM trong các lần lấy mẫu gần nhất
+              </title>
+              <path class="chart-baseline" d="M0 150 H600"></path>
+              <polyline id="memory-line" points=""></polyline>
+              <circle id="memory-dot" r="4" cx="0" cy="150" hidden></circle>
+            </svg>
+            <p id="chart-caption" class="muted">
+              Đồ thị bắt đầu từ khi kết nối. Tối đa 30 mẫu, không lưu lịch sử
+              sau khi tải lại trang.
+            </p>
+          </section>
+          <section class="card">
+            <h2>HTTP & kết nối</h2>
+            <dl class="metric-details">
+              <div>
+                <dt>Tổng request hoàn tất</dt>
+                <dd id="http-count">—</dd>
+              </div>
+              <div>
+                <dt>Thời gian phản hồi trung bình</dt>
+                <dd id="http-latency">—</dd>
+              </div>
+              <div>
+                <dt>Luồng JVM đang hoạt động</dt>
+                <dd id="threads-value">—</dd>
+              </div>
+              <div>
+                <dt>Kết nối database đang dùng</dt>
+                <dd id="db-active">—</dd>
+              </div>
+              <div>
+                <dt>Kết nối database đang chờ</dt>
+                <dd id="db-pending">—</dd>
+              </div>
+            </dl>
+            <p class="muted">
+              HTTP tính từ lúc khởi động, bao gồm các yêu cầu giám sát. Trung
+              bình tính trên request đã hoàn tất.
+            </p>
+          </section>
+          <section class="card mail-panel">
+            <div class="heading">
+              <div>
+                <h2>Hàng đợi email</h2>
+                <p class="muted">Bộ đếm được máy chủ cập nhật mỗi 30 giây.</p>
+              </div>
+              <span id="mail-summary" class="pill">—</span>
+            </div>
+            <div class="mail-cards">
+              <div>
+                <small>Đang chờ</small><strong id="mail-pending">—</strong>
+              </div>
+              <div>
+                <small>Đang gửi</small><strong id="mail-sending">—</strong>
+              </div>
+              <div><small>Đã gửi</small><strong id="mail-sent">—</strong></div>
+              <div>
+                <small>Thất bại</small><strong id="mail-failed">—</strong>
+              </div>
+            </div>
+            <p class="muted">
+              Đã gửi nghĩa là SMTP đã chấp nhận email; SMTP sink chỉ nhận thư để
+              kiểm thử.
+            </p>
+          </section>
+          <section class="card catalog-panel">
+            <div class="heading">
+              <div>
+                <h2>Khám phá metric</h2>
+                <p class="muted">Xem số đo gốc và lọc theo từng nhãn.</p>
+              </div>
+              <span id="metric-count" class="pill">0 metric</span>
+            </div>
+            <form id="explore-form">
+              <label for="metric-search"
+                >Tìm metric<input
+                  id="metric-search"
+                  type="search"
+                  placeholder="Ví dụ: jvm, http, hikaricp…" /></label
+              ><label for="metric-select"
+                >Metric<select id="metric-select" required></select></label
+              ><button type="submit">Xem chi tiết</button>
+            </form>
+            <div id="metric-tags" class="actions"></div>
+            <p id="metric-description" class="muted"></p>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Số đo</th>
+                    <th>Giá trị</th>
+                    <th>Đơn vị</th>
+                  </tr>
+                </thead>
+                <tbody id="metric-values"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer>LinkHub VN · Giám sát vận hành</footer>
+  </body>
+</html>

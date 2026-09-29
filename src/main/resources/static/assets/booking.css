@@ -1,0 +1,16 @@
+.profile-booking { grid-column: 1 / -1; }
+.booking-dashboard { margin-top: 24px; }
+.booking-row { display: flex; gap: 12px; align-items: end; flex-wrap: wrap; padding: 12px 0; border-bottom: 1px solid #b6bfb633; }
+.booking-row label { flex: 1 1 130px; margin-bottom: 0; }
+.booking-row button { margin-bottom: 0; }
+.booking-dashboard h3 { margin-top: 24px; }
+@media (min-width: 850px) {
+  /* The sticky containing block ends before booking, so the hero scrolls away. */
+  body.profile-surface[data-template="STUDIO"] .profile-layout.has-booking { display: block; }
+  body.profile-surface[data-template="STUDIO"] .studio-overview {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; margin-bottom: 24px;
+  }
+  body.profile-surface[data-template="STUDIO"] .studio-overview > .profile-hero { grid-row: auto; grid-column: 1; }
+  .studio-overview-content { min-width: 0; }
+  body.profile-surface[data-template="STUDIO"] .profile-layout.has-booking > .card { margin-bottom: 24px; }
+}

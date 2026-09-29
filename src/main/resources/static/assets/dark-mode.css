@@ -1,0 +1,55 @@
+:root { color-scheme: light; }
+:root[data-color-mode="dark"] { color-scheme: dark; background: #111a16; color: #e8f0e8; }
+.header-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-left: auto; }
+.theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 7px; white-space: nowrap; }
+.theme-toggle [data-theme-icon] { font-size: 18px; line-height: 1; }
+/* Low-specificity selectors let profile palettes keep their own accent colors. */
+:where(:root[data-color-mode="dark"]) header { border-color: #34483a; }
+:where(:root[data-color-mode="dark"]) header > span { color: #b2c1b4; }
+:where(:root[data-color-mode="dark"]) .brand { color: #e8f0e8; }
+:where(:root[data-color-mode="dark"]) .brand span { background: #344e33; color: #daefb7; }
+:where(:root[data-color-mode="dark"]) a { color: #b5d991; }
+:where(:root[data-color-mode="dark"]) .card { background: #1b2820; border-color: #34483a; }
+:where(:root[data-color-mode="dark"]) .eyebrow { color: #bad69b; }
+:where(:root[data-color-mode="dark"]) .intro em { color: #b5d991; }
+:where(:root[data-color-mode="dark"]) .intro > p:not(.eyebrow) { color: #b2c1b4; }
+:where(:root[data-color-mode="dark"]) :is(input, textarea, select) { background: #121d16; border-color: #48604d; }
+:where(:root[data-color-mode="dark"]) :is(input, textarea)::placeholder { color: #94a596; opacity: 1; }
+:where(:root[data-color-mode="dark"]) button { background: #b5d991; color: #192818; }
+:where(:root[data-color-mode="dark"]) .secondary { background: #2c4030; color: #dcebd5; }
+:where(:root[data-color-mode="dark"]) .danger { background: #492a2a; color: #ffbcb0; }
+:where(:root[data-color-mode="dark"]) .pill { background: #304329; color: #dcebd5; }
+:where(:root[data-color-mode="dark"]) .stats .card:first-child { background: #2b4027; }
+:where(:root[data-color-mode="dark"]) :is(.list-item, .day-row) { border-color: #34483a; }
+:where(:root[data-color-mode="dark"]) :is(.muted, small, footer) { color: #b2c1b4; }
+:where(:root[data-color-mode="dark"]) #notice { background: #29422c; border-color: #52784c; color: #e2f4d5; }
+:where(:root[data-color-mode="dark"]) #notice.error { background: #452925; border-color: #98594c; color: #ffd3c9; }
+:where(:root[data-color-mode="dark"]) .price { color: #b5d991; }
+:where(:root[data-color-mode="dark"]) .template-option { border-color: #48604d; }
+:where(:root[data-color-mode="dark"]) .template-option:has(input:checked) { border-color: #b5d991; box-shadow: 0 0 0 1px #b5d991; }
+:where(:root[data-color-mode="dark"]) .template-check { color: #b5d991; }
+:where(:root[data-color-mode="dark"]) .template-description { color: #b2c1b4; }
+/* Shared by public profiles, thumbnails and the preview; template IDs are unchanged. */
+:root[data-color-mode="dark"] .profile-surface[data-template="CLASSIC"] {
+  --profile-bg: #111a16; --profile-card: #1b2820; --profile-text: #e8f0e8;
+  --profile-muted: #b2c1b4; --profile-accent: #b5d991; --profile-soft: #2c4030;
+  --profile-line: #34483a; --profile-button: #b5d991; --profile-button-text: #192818;
+}
+:root[data-color-mode="dark"] .profile-surface[data-template="MINIMAL"] {
+  --profile-bg: #171717; --profile-card: #232323; --profile-text: #f2f2f2;
+  --profile-muted: #bcbcbc; --profile-accent: #e5e5e5; --profile-soft: #333;
+  --profile-line: #484848; --profile-button: #e5e5e5; --profile-button-text: #171717;
+}
+:root[data-color-mode="dark"] .profile-surface[data-template="STUDIO"] {
+  --profile-bg: #211813; --profile-card: #30231d; --profile-text: #f7e8dc;
+  --profile-muted: #d0b5a1; --profile-accent: #efb18c; --profile-soft: #493329;
+  --profile-line: #654a3c; --profile-button: #efb18c; --profile-button-text: #291b13;
+}
+/* Palette-specific text remains readable even when the surrounding dashboard is dark. */
+.profile-surface :is(input, textarea)::placeholder { color: var(--profile-muted); }
+@media (max-width: 480px) {
+  header { gap: 12px; flex-wrap: wrap; }
+  .header-actions { gap: 8px; }
+  .header-actions button { padding: 10px 12px; }
+  body.profile-surface .header-actions { flex-basis: 100%; justify-content: space-between; }
+}

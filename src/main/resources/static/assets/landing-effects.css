@@ -1,0 +1,75 @@
+html.landing-page { scroll-behavior: smooth; }
+body.profile-surface[data-layout="landing"] .landing-nav {
+  position: sticky; top: 10px; z-index: 20;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 8%);
+  gap: 6px; padding: 10px;
+}
+body.profile-surface[data-layout="landing"] .landing-nav a {
+  padding: 9px 13px; border-radius: 8px;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+body.profile-surface[data-layout="landing"] .landing-nav a[aria-current="location"] {
+  background: var(--profile-soft); color: var(--profile-accent); text-decoration: underline; text-underline-offset: 5px;
+}
+body.profile-surface[data-layout="landing"] :is(.landing-section, #services-section, #contact-section) {
+  scroll-margin-top: var(--landing-nav-offset, 150px);
+}
+body.profile-surface[data-layout="landing"] .profile-hero { position: relative; overflow: hidden; isolation: isolate; }
+body.profile-surface[data-layout="landing"] .profile-hero > * { position: relative; z-index: 1; }
+body.profile-surface[data-layout="landing"] .profile-hero::before {
+  content: ''; position: absolute; width: 380px; height: 380px; right: -150px; top: -160px;
+  border-radius: 50%; background: var(--profile-soft); opacity: .65; pointer-events: none;
+  animation: hero-orbit 4s ease-out both;
+}
+body.profile-surface[data-layout="landing"] .profile-hero::after {
+  content: ''; position: absolute; width: 240px; height: 240px; left: -140px; bottom: -160px;
+  border: 36px solid var(--profile-accent); border-radius: 50%; opacity: .08; pointer-events: none;
+  animation: hero-orbit 4s ease-out reverse both;
+}
+body.profile-surface[data-layout="landing"] .profile-hero > :is(.avatar, .eyebrow, .profile-name, .preserve, .socials, .hero-cta) {
+  animation: landing-reveal 650ms cubic-bezier(.2,.7,.2,1) both;
+}
+body.profile-surface[data-layout="landing"] .profile-hero > .profile-name { animation-delay: 80ms; }
+body.profile-surface[data-layout="landing"] .profile-hero > .preserve { animation-delay: 140ms; }
+body.profile-surface[data-layout="landing"] .profile-hero > :is(.socials, .hero-cta) { animation-delay: 200ms; }
+body.profile-surface[data-layout="landing"] .reveal-enter { animation: landing-reveal 600ms cubic-bezier(.2,.7,.2,1) both; }
+body.profile-surface[data-layout="landing"] .reveal-enter[data-reveal-step="1"] { animation-delay: 65ms; }
+body.profile-surface[data-layout="landing"] .reveal-enter[data-reveal-step="2"] { animation-delay: 130ms; }
+.profile-surface[data-layout="landing"] :is(.section-item, #services .list-item, .socials a, .hero-cta, .preview-cta, .section-link) {
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+.profile-surface[data-layout="landing"] .section-item summary { transition: color 180ms ease; }
+.profile-surface[data-layout="landing"] .section-item[open] summary { color: var(--profile-accent); }
+.profile-surface[data-layout="landing"] details[open] > :not(summary) { animation: faq-enter 240ms ease-out; }
+.profile-surface[data-layout="landing"] .hero-cta:active { transform: scale(.98); }
+.reading-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 100; border: 0; appearance: none; background: transparent; color: var(--profile-accent); pointer-events: none; }
+.reading-progress::-webkit-progress-bar { background: transparent; }
+.reading-progress::-webkit-progress-value { background: var(--profile-accent); }
+.reading-progress::-moz-progress-bar { background: var(--profile-accent); }
+.back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 25; box-shadow: 0 6px 24px rgb(0 0 0 / 18%); }
+@media (hover: hover) and (pointer: fine) {
+  .profile-surface[data-layout="landing"] :is(article.section-item, #services .list-item):hover { transform: translateY(-5px); border-color: var(--profile-accent); box-shadow: 0 12px 26px rgb(0 0 0 / 10%); }
+  .profile-surface[data-layout="landing"] :is(.socials a, .hero-cta, .preview-cta):hover { transform: translateY(-3px); box-shadow: 0 7px 18px rgb(0 0 0 / 12%); }
+  .profile-surface[data-layout="landing"] .section-link:hover { text-decoration-thickness: 2px; text-underline-offset: 4px; }
+}
+@keyframes landing-reveal { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
+@keyframes hero-orbit { from { transform: translate(-24px, 24px) scale(.85); } to { transform: translate(0, 0) scale(1); } }
+@keyframes faq-enter { from { opacity: .2; translate: 0 -5px; } to { opacity: 1; translate: 0 0; } }
+@media (max-width: 600px) {
+  body.profile-surface[data-layout="landing"] .landing-nav { top: 6px; }
+  body.profile-surface[data-layout="landing"] .landing-nav a { padding: 8px 10px; font-size: 12px; }
+  .back-to-top { bottom: max(16px, env(safe-area-inset-bottom)); right: 16px; padding: 10px 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.landing-page { scroll-behavior: auto; }
+  body.profile-surface[data-layout="landing"] .profile-hero::before,
+  body.profile-surface[data-layout="landing"] .profile-hero::after,
+  body.profile-surface[data-layout="landing"] .profile-hero > *,
+  .profile-surface[data-layout="landing"] .reveal-enter,
+  .profile-surface[data-layout="landing"] details[open] > :not(summary) { animation: none !important; }
+  .profile-surface[data-layout="landing"] :is(.section-item, #services .list-item, .socials a, .hero-cta, .preview-cta, .section-link, .landing-nav a, summary) { transition: none; transform: none !important; }
+}
+@media print {
+  .reading-progress, .back-to-top, .landing-nav { display: none !important; }
+  body.profile-surface[data-layout="landing"] :is(.reveal-enter, .profile-hero > *) { animation: none !important; }
+}

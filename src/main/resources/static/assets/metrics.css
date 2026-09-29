@@ -1,0 +1,240 @@
+.metrics-shell header,
+.metrics-shell main {
+  max-width: 1600px;
+}
+.metrics-shell main {
+  padding-top: 30px;
+}
+.metrics-shell h1 {
+  margin-bottom: 10px;
+}
+.metrics-shell .card {
+  margin-bottom: 0;
+}
+.metrics-shell .heading {
+  flex-wrap: wrap;
+}
+.connect-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.connect-panel h2 {
+  margin-bottom: 12px;
+}
+.connect-panel form {
+  max-width: 520px;
+  width: 100%;
+  justify-self: end;
+}
+.connect-panel label {
+  margin-top: 0;
+}
+.monitor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.monitor-toolbar label {
+  margin: 0;
+}
+.metric-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.metric-cards strong {
+  display: block;
+  font-size: clamp(24px, 2.5vw, 36px);
+  margin-top: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.metric-cards p {
+  margin-bottom: 0;
+}
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+.mail-panel,
+.catalog-panel {
+  grid-column: 1/-1;
+}
+.metric-details {
+  margin: 0;
+}
+.metric-details > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid #87998b40;
+}
+.metric-details dt {
+  font-size: 14px;
+}
+.metric-details dd {
+  margin: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.mail-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+.mail-cards > div {
+  border: 1px solid #87998b40;
+  border-radius: 12px;
+  padding: 18px;
+}
+.mail-cards strong {
+  display: block;
+  font-size: 30px;
+  margin-top: 8px;
+}
+.metrics-shell svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 120px;
+}
+.chart-baseline {
+  stroke: #87998b60;
+  stroke-width: 1;
+}
+#memory-line {
+  stroke: #6b9d40;
+  stroke-width: 3;
+  fill: none;
+  stroke-linejoin: round;
+}
+#memory-dot {
+  fill: #6b9d40;
+}
+#explore-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  gap: 18px;
+  align-items: end;
+}
+#explore-form button {
+  margin: 0;
+}
+#explore-form label {
+  margin: 0;
+  min-width: 0;
+}
+#metric-tags {
+  margin-top: 18px;
+}
+#metric-tags label {
+  min-width: 150px;
+  flex: 1;
+  max-width: 320px;
+}
+#metric-tags select {
+  max-width: 100%;
+}
+.table-scroll {
+  overflow: auto;
+}
+.metrics-shell table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 18px;
+  text-align: left;
+  font-size: 14px;
+}
+.metrics-shell th,
+.metrics-shell td {
+  padding: 13px;
+  border-bottom: 1px solid #87998b40;
+  overflow-wrap: anywhere;
+}
+.metrics-shell .muted {
+  line-height: 1.6;
+}
+#metrics-notice {
+  padding: 16px;
+  border: 1px solid #c49145;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow-wrap: anywhere;
+}
+.metrics-shell [data-state="error"] {
+  color: #a52e24;
+  background: #fdebe4;
+}
+.metrics-shell [data-state="ok"] {
+  color: #305824;
+  background: #e5efcf;
+}
+.metrics-shell [data-state="stale"] {
+  color: #805b1c;
+  background: #fff0d4;
+}
+:root[data-color-mode="dark"] .metrics-shell [data-state="error"] {
+  color: #ffc1b3;
+  background: #492923;
+}
+:root[data-color-mode="dark"] .metrics-shell [data-state="ok"] {
+  color: #c1e58f;
+  background: #263721;
+}
+:root[data-color-mode="dark"] .metrics-shell [data-state="stale"] {
+  color: #f1d18f;
+  background: #3c301c;
+}
+@media (max-width: 1000px) {
+  .metric-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .connect-panel {
+    gap: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .connect-panel {
+    grid-template-columns: 1fr;
+  }
+  .metric-cards,
+  .mail-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .metric-cards .card {
+    padding: 18px;
+  }
+  .metric-details > div {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #explore-form {
+    grid-template-columns: 1fr;
+  }
+  .metrics-shell header {
+    flex-wrap: wrap;
+  }
+  .metrics-shell header .actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .metrics-shell h1 {
+    font-size: 32px;
+  }
+  .mail-cards > div {
+    padding: 12px;
+  }
+}
