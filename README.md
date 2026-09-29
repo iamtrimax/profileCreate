@@ -53,7 +53,11 @@ Linux/macOS dùng `./mvnw` thay cho `.\mvnw.cmd`.
 | `APP_BASE_URL` | `http://localhost:8081` | Domain gốc dùng tạo QR |
 | `COOKIE_SECURE` | `false` | Đặt `true` khi chạy HTTPS |
 
-`.env.example` là mẫu cho Docker Compose. Spring Boot **không tự đọc `.env`**; nếu đổi mật khẩu Compose, cần đặt cùng giá trị trong biến môi trường của ứng dụng/IDE. Ví dụ PowerShell: `$env:DB_PASSWORD='mat-khau-local-cua-ban'`. Compose hiện chỉ bind DB/Redis vào loopback và phù hợp phát triển local. Khi đưa lên server: dùng secret riêng, TLS, `COOKIE_SECURE=true`, `APP_BASE_URL` đúng domain và bảo vệ mạng DB/Redis. Không bật profile `test` trên server.
+Spring Boot và Docker Compose đọc file `.env` đặt cạnh `pom.xml`. Lần đầu sao chép `.env.example` thành `.env` nếu chưa có. Chạy backend với working directory `E:\Springtboot\linkhub` (IntelliJ: Run Configuration → Working directory). File được Spring đọc dưới dạng properties UTF-8: mỗi dòng `KEY=value`, không thêm `export` hoặc dấu nháy bao quanh giá trị; comment đặt trên dòng riêng bắt đầu bằng `#`. Với giá trị có ký tự backslash, phải escape theo cú pháp properties. File `.env` đã được Git bỏ qua và không được đóng gói vào JAR.
+
+Đổi `APP_BASE_URL=https://domain-cua-ban.vn` trong `.env`, khởi động lại backend, rồi tải lại dashboard để tạo QR mới. File QR đã tải trước đó cần tải lại. Biến môi trường trong PowerShell/IDE và tham số dòng lệnh vẫn có độ ưu tiên cao hơn `.env`; xóa giá trị cũ ở đó nếu muốn dùng giá trị trong file. Thiếu `.env` thì ứng dụng dùng cấu hình mặc định. Cơ chế đọc file dùng [Spring Boot Config Data import](https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.files.importing-extensionless).
+
+Compose hiện chỉ bind DB/Redis vào loopback và phù hợp phát triển local. Khi đưa lên server: dùng secret riêng, TLS, `COOKIE_SECURE=true`, `APP_BASE_URL` đúng domain và bảo vệ mạng DB/Redis. Không bật profile `test` trên server.
 
 Phiên Redis hết hạn sau 30 phút không hoạt động, cấu hình tại `RedisSessionConfig`. Redis cần hoạt động để đăng nhập và gửi yêu cầu. Bộ giới hạn dùng Lua INCR/EXPIRE nguyên tử: đăng ký 5 lần/giờ/IP, đăng nhập 20 lần/5 phút/IP, liên hệ 5 lần/10 phút/IP, lượt xem 60 lần/phút/IP. Đếm cả yêu cầu đăng nhập thành công. Dùng địa chỉ kết nối trực tiếp, không tin `X-Forwarded-For` do khách tự gửi; khi thêm reverse proxy cần cấu hình trusted proxy trước để tránh toàn bộ khách dùng chung hạn mức.
 
