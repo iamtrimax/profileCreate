@@ -1,3 +1,4 @@
+import {initAudit,refreshAudit,clearAudit} from './audit.js';
 const $ = (id) => document.getElementById(id);
 const number = new Intl.NumberFormat("vi-VN", { maximumFractionDigits: 2 });
 const precise = new Intl.NumberFormat("vi-VN", {
@@ -25,6 +26,7 @@ function state(text, status) {
   $("connection").dataset.state = status;
 }
 function disconnect(note = "") {
+  clearAudit();
   connection?.abort();
   connection = null;
   token = "";
@@ -68,8 +70,8 @@ function disconnect(note = "") {
   state("Chưa kết nối", "");
   message(note);
 }
-async function request(path, session, allowUnavailable = false) {
-  const response = await fetch("/actuator/" + path, {
+async function request(path, session, allowUnavailable = false, base = "/actuator/") {
+  const response = await fetch(base + path, {
     headers: { Authorization: "Bearer " + token },
     credentials: "omit",
     cache: "no-store",
@@ -209,6 +211,8 @@ async function refresh() {
     $("mail-summary").dataset.state =
       mailFailed === null ? "" : mailFailed > 0 ? "error" : "ok";
     chart(value(data.memory));
+    await refreshAudit();
+    if (connection !== session) return;
     $("updated").textContent =
       "Lấy mẫu lúc " + new Date().toLocaleTimeString("vi-VN");
     state(
@@ -356,4 +360,5 @@ $("explore-form").addEventListener("submit", (event) => {
   event.preventDefault();
   detail();
 });
+initAudit(query=>connection?request('audit-logs?'+query,connection,false,'/api/ops/'):Promise.reject(new Error('Disconnected')));
 window.addEventListener("pagehide", () => disconnect());

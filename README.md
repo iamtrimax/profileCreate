@@ -232,3 +232,8 @@ Kiểm thử thông thường: `.\mvnw.cmd test`. H2 chỉ kiểm tra API và sc
 Test tạo/xóa schema `booking_test_*` riêng, không thay đổi dữ liệu profile hiện có. Có thể cấu hình `booking.pg.user` và `booking.pg.password` cho database test. Bộ kiểm thử gồm hai giao dịch cùng thấy giờ trống trước khi chèn, overlap, ranh giới `[)`, hủy/đặt lại, cập nhật gây overlap, DST, API/CSRF và quyền sở hữu. Tham khảo [tài liệu range và exclusion của PostgreSQL](https://www.postgresql.org/docs/current/rangetypes.html#RANGETYPES-CONSTRAINT).
 
 Tài liệu kỹ thuật đã đối chiếu: [Spring Session với Redis](https://docs.spring.io/spring-session/reference/guides/boot-redis.html), [lưu SecurityContext khi đăng nhập thủ công](https://docs.spring.io/spring-security/reference/7.0/servlet/authentication/persistence.html).
+
+
+## Audit log
+
+Trang `/ops/metrics` có nhật ký hoạt động với bộ lọc và phân trang, bảo vệ bằng `OPS_TOKEN`. Khởi động lại để áp dụng migration V9. Cấu hình thời gian lưu bằng `AUDIT_RETENTION_DAYS` trong `.env` (mặc định 180 ngày). Xem [phạm vi ghi nhận, API và giới hạn lưu trữ](docs/AUDIT.md).

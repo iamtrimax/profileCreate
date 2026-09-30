@@ -176,6 +176,32 @@
               kiểm thử.
             </p>
           </section>
+          <section class="card audit-panel" aria-labelledby="audit-title">
+            <div class="heading">
+              <div><h2 id="audit-title">Nhật ký hoạt động</h2><p class="muted">Tra cứu thao tác và kết quả xử lý. Mặc định hiển thị 7 ngày gần nhất.</p></div>
+              <button id="audit-refresh" type="button" class="secondary">Làm mới nhật ký</button>
+            </div>
+            <div class="mail-cards">
+              <div><small>Tổng theo bộ lọc</small><strong id="audit-total">—</strong></div>
+              <div><small>Thành công</small><strong id="audit-success">—</strong></div>
+              <div><small>Bị từ chối</small><strong id="audit-denied">—</strong></div>
+              <div><small>Thất bại</small><strong id="audit-failure">—</strong></div>
+            </div>
+            <form id="audit-form">
+              <label>Từ thời điểm<input id="audit-from" type="datetime-local" required /></label>
+              <label>Đến thời điểm<input id="audit-to" type="datetime-local" /></label>
+              <label>Hành động<select id="audit-action"><option value="">Tất cả</option></select></label>
+              <label>Kết quả<select id="audit-outcome"><option value="">Tất cả</option><option value="SUCCESS">Thành công</option><option value="DENIED">Bị từ chối</option><option value="FAILURE">Thất bại</option></select></label>
+              <label>ID tài khoản<input id="audit-actor" placeholder="UUID tài khoản" maxlength="36" /></label>
+              <label>Request ID<input id="audit-request" placeholder="Mã đối chiếu request" maxlength="64" pattern="[A-Za-z0-9-]{1,64}" /></label>
+              <div class="actions"><button type="submit">Áp dụng bộ lọc</button><button id="audit-reset" type="button" class="secondary">Đặt lại</button></div>
+            </form>
+            <p class="muted">Thời gian theo múi giờ thiết bị; mỗi lần tra cứu tối đa 90 ngày. Nhật ký không chứa mật khẩu, token hay nội dung khách gửi.</p>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Bảng nhật ký hoạt động">
+              <table class="audit-table"><thead><tr><th>Thời điểm</th><th>Hành động</th><th>Người thực hiện</th><th>Đối tượng</th><th>Kết quả</th><th>Request ID</th></tr></thead><tbody id="audit-rows"></tbody></table>
+            </div>
+            <div class="audit-footer"><p id="audit-status" class="muted" role="status" aria-live="polite"></p><div class="actions"><button id="audit-prev" type="button" class="secondary" disabled>Trước</button><span id="audit-page">Trang 1</span><button id="audit-next" type="button" class="secondary" disabled>Sau</button></div></div>
+          </section>
           <section class="card catalog-panel">
             <div class="heading">
               <div>

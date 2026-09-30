@@ -25,9 +25,10 @@ public class SecurityConfig {
         provider.setPasswordEncoder(encoder);
         return new ProviderManager(provider);
     }
-    @Bean SecurityFilterChain security(HttpSecurity http, SecurityContextRepository repository, com.trimax.linkhub.service.AccountSecurityService accounts,OperationsAccess operations) throws Exception {
+    @Bean SecurityFilterChain security(HttpSecurity http, SecurityContextRepository repository, com.trimax.linkhub.service.AccountSecurityService accounts,OperationsAccess operations,com.trimax.linkhub.service.AuditService audit) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/ops/**").access((authentication,context)->new org.springframework.security.authorization.AuthorizationDecision(operations.allowed(context.getRequest())))
                         .requestMatchers("/actuator/metrics", "/actuator/metrics/**", "/actuator/prometheus").access((authentication,context)->new org.springframework.security.authorization.AuthorizationDecision(operations.allowed(context.getRequest())))
                         .requestMatchers("/api/me", "/api/me/**").authenticated()
                         .requestMatchers("/api/auth/password-reset/**", "/api/auth/email-verification/confirm", "/actuator/health", "/actuator/health/**").permitAll()
@@ -36,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
                         .anyRequest().denyAll())
                 .securityContext(context -> context.securityContextRepository(repository))
+                .addFilterBefore(new AuditFilter(audit,accounts),org.springframework.security.web.csrf.CsrfFilter.class)
                 .addFilterBefore(new AccountSessionFilter(accounts),org.springframework.security.web.access.intercept.AuthorizationFilter.class)
                 .requestCache(cache -> cache.disable())
                 .exceptionHandling(errors -> errors

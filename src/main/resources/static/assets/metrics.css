@@ -64,6 +64,7 @@
   align-items: start;
 }
 .mail-panel,
+.audit-panel,
 .catalog-panel {
   grid-column: 1/-1;
 }
@@ -147,6 +148,16 @@
 .table-scroll {
   overflow: auto;
 }
+.metrics-grid > * { min-width: 0; }
+#audit-form { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+#audit-form label { min-width: 0; margin: 0; }
+#audit-form .actions { grid-column: 1/-1; }
+.audit-table { min-width: 980px; }
+.audit-table td { vertical-align: top; max-width: 230px; }
+.audit-table small { display: block; margin-top: 6px; }
+.audit-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; }
+@media (max-width: 800px) { #audit-form { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { #audit-form { grid-template-columns: 1fr; } }
 .metrics-shell table {
   border-collapse: collapse;
   width: 100%;
