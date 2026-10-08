@@ -1,3 +1,4 @@
+import {initWorkspace} from './workspace.js';
 import {api, refreshCsrf, $, node, notice, action, busy, form, money} from './common.js';
 import {templates, renderTemplatePicker, renderPreview} from './templates.js';
 import {sectionTypes} from './landing.js';
@@ -18,10 +19,11 @@ function updatePreview() {
   const template = fields.namedItem('template').value || 'CLASSIC';
   renderPreview($('template-preview'), {username: me.username, displayName: fields.displayName.value, bio: fields.bio.value, template, links: profileLinks, services: profileServices, sections: profileSections});
   const label = templates.find(item => item.id === template).name;
-  $('template-state').textContent = label + (template === (me.template || 'CLASSIC') ? ' · Đã lưu' : ' · Chưa lưu');
+  const dirty = template !== (me.template || 'CLASSIC') || fields.displayName.value !== me.displayName || fields.bio.value !== me.bio || fields.published.checked !== me.published;
+  $('template-state').textContent = label + (dirty ? ' · Chưa lưu' : ' · Đã lưu');
 }
 $('profile-form').addEventListener('input', updatePreview);
-function authMode(register) { $('login-form').hidden = register; $('register-form').hidden = !register; $('forgot-form').hidden=true; }
+function authMode(register) { $('login-form').hidden = register; $('register-form').hidden = !register; $('forgot-form').hidden=true; $('show-login').setAttribute('aria-pressed', String(!register)); $('show-register').setAttribute('aria-pressed', String(register)); }
 $('show-login').onclick = () => authMode(false);
 $('show-register').onclick = () => authMode(true);
 form('login-form', async data => { me = await api('/auth/login', 'POST', data); await refreshCsrf(); await dashboard(); notice('Đã đăng nhập.'); });
@@ -29,6 +31,7 @@ form('register-form', async (data, formElement) => { await api('/auth/register',
 $('logout').onclick = () => busy($('logout'), async () => { await api('/auth/logout', 'POST'); stopNotifications(); stopReminders(); location.reload(); });
 async function dashboard() {
   renderAccount(me);
+  initWorkspace();
   $('auth').hidden = true; $('dashboard').hidden = false; $('logout').hidden = false;
   $('greeting').textContent = `Xin chào, ${me.displayName}`;
   $('public-link').textContent = `${location.origin}/${me.username}`; $('public-link').href = '/' + me.username;
@@ -41,6 +44,7 @@ async function dashboard() {
   $('qr-box').hidden = !me.published;
   if (me.published) { $('qr').src = `/api/public/${me.username}/qr`; $('qr-download').href = $('qr').src; }
   await Promise.all([loadLinks(), loadServices(), loadSections(), loadInbox(), loadAnalytics(), loadBookingDashboard(),startReminders()]);
+  initWorkspace();
   await startNotifications(()=>Promise.all([loadInbox(),loadAnalytics(),refreshBookings(),refreshReminders()]));
 }
 form('profile-form', async data => { me = await api('/me/profile', 'PUT', {displayName: data.displayName, bio: data.bio, published: data.published === 'on', template: data.template}); await dashboard(); notice('Đã lưu profile và mẫu giao diện.'); });

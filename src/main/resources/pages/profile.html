@@ -9,11 +9,13 @@
   <link rel="stylesheet" href="/assets/landing.css">
   <link rel="stylesheet" href="/assets/landing-effects.css">
   <link rel="stylesheet" href="/assets/block-reveal.css"><link rel="stylesheet" href="/assets/booking.css">
+  <link rel="stylesheet" href="/assets/template-layouts.css">
   <script src="/assets/profile.js" type="module"></script>
 </head>
 <body class="profile-surface" data-template="CLASSIC">
 <header><a class="brand" href="/">LinkHub<span>VN</span></a><div class="header-actions"><a href="/app">Tạo trang của bạn →</a><button type="button" class="secondary theme-toggle" data-theme-toggle aria-pressed="false" hidden><span data-theme-icon aria-hidden="true">☾</span> Chế độ tối</button></div></header>
-<main class="public">
+<a class="skip-link" href="#main-content">Đến nội dung chính</a>
+<main class="public" id="main-content" tabindex="-1">
   <div id="notice" role="status" aria-live="polite" hidden></div>
   <nav id="landing-nav" class="landing-nav" aria-label="Các mục trên trang"></nav>
   <div class="profile-layout">
@@ -23,7 +25,7 @@
       <a class="hero-cta" href="#contact-section">Trao đổi nhu cầu →</a>
     </section>
     <div id="landing-intro" class="landing-content" hidden></div>
-    <section id="services-section" class="card profile-services"><p class="eyebrow">MÌNH CÓ THỂ GIÚP BẠN</p><h2>Dịch vụ</h2><div id="services"></div></section>
+    <section id="services-section" class="card profile-services"><p class="eyebrow">MÌNH CÓ THỂ GIÚP BẠN</p><h2>Dịch vụ</h2><div id="services" class="service-items"></div></section>
     <div id="landing-details" class="landing-content" hidden></div>
     <section id="contact-section" class="card profile-contact">
       <p class="eyebrow">BẮT ĐẦU MỘT KẾT NỐI</p><h2>Gửi yêu cầu</h2>

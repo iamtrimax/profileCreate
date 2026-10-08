@@ -2,6 +2,7 @@ import {api, node, action} from './common.js';
 
 let panel, timer, active=false, version=0;
 function openBookings() {
+  window.dispatchEvent(new CustomEvent('linkhub:open-workspace', {detail:'bookings'}));
   const target=document.getElementById('bookings-list');
   if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});}
 }

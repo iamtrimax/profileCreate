@@ -249,3 +249,20 @@
     padding: 12px;
   }
 }
+/* Operations follows the same calm surfaces and spacing as the workspace. */
+.metrics-shell { background:var(--canvas); color:var(--ink); }
+.metrics-shell :is(header,main) { max-width:1380px; }
+.metrics-shell header { padding-block:24px; }
+.metrics-shell main { padding-top:40px; }
+.metrics-shell :is(.card,input,select,textarea) { background:var(--surface); border-color:var(--line); }
+.metrics-shell :is(.muted,small) { color:var(--muted); }
+.metrics-shell :is(a,.eyebrow) { color:var(--accent); }
+.metrics-shell .brand { color:var(--ink); }
+.metrics-shell :is(.secondary,.pill,.brand span) { background:var(--accent-soft); color:var(--accent); }
+.metrics-shell button:not(.secondary):not(.danger) { background:var(--accent); color:var(--on-accent); }
+.metrics-shell .heading { padding-bottom:24px; border-bottom:1px solid var(--line); margin-bottom:32px; }
+.metrics-shell h1 { font-size:36px; }
+.metrics-shell .connect-panel { padding:32px; }
+.metrics-shell .metric-cards .card { border-top:3px solid var(--line); }
+.metrics-shell .metric-cards .card:first-child { border-top-color:var(--accent); }
+@media(max-width:600px) { .metrics-shell .connect-panel { padding:22px; } .metrics-shell h1 { font-size:28px; } }

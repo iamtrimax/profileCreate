@@ -22,7 +22,7 @@ try {
   initLandingEffects();
   const replay = node('button', 'Xem lại hiệu ứng', 'secondary');
   replay.type = 'button';
-  document.querySelector('.header-actions').append(replay);
+  document.querySelector('footer').append(replay);
   initBlockReveal(document.body, {replayButton: replay});
   // A page view is recorded separately; API reads and QR downloads do not inflate analytics.
   api(`/public/${username}/visits`, 'POST',{referrer:document.referrer.slice(0,2048)}).catch(() => {});

@@ -63,11 +63,4 @@
 .template-preview .section-item { padding: 12px; }
 .template-preview .landing-section h2 { font-size: 18px; margin-bottom: 14px; }
 .template-preview .landing-section h3 { font-size: 15px; }
-@media (min-width: 850px) {
-  body.profile-surface[data-layout="landing"] :is([data-section-type="FEATURE"], [data-section-type="PROCESS"]) .section-items { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  body.profile-surface[data-layout="landing"] [data-section-type="PROJECT"] .section-items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  body.profile-surface[data-layout="landing"] #services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-  body.profile-surface[data-layout="landing"] #services .list-item { border: 1px solid var(--profile-line); border-radius: var(--profile-radius); padding: 24px; margin: 0; background: var(--profile-bg); }
-  body.profile-surface[data-template="STUDIO"] .landing-content { grid-column: 2; }
-}
 @media (max-width: 849px) { .profile-surface[data-layout="landing"] .profile-hero { padding: 36px 22px; } }

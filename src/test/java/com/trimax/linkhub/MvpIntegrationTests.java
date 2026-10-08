@@ -106,7 +106,8 @@ class MvpIntegrationTests {
         MockHttpSession owner = registerLogin(username);
         MockHttpSession other = registerLogin(username + "b");
         mvc.perform(get("/api/me").session(owner)).andExpect(jsonPath("$.template").value("CLASSIC"));
-        for (String template : List.of("MINIMAL", "STUDIO", "MIDNIGHT", "CLASSIC", "BUSINESS", "PORTFOLIO", "CREATOR")) {
+        for (var choice : com.trimax.linkhub.domain.ProfileTemplate.values()) {
+            String template = choice.name();
             String input = json.writeValueAsString(Map.of("displayName", "Template test", "bio", "Profile description", "published", true, "template", template));
             mvc.perform(put("/api/me/profile").session(owner).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(input))
                     .andExpect(status().isOk()).andExpect(jsonPath("$.template").value(template));
@@ -126,6 +127,8 @@ class MvpIntegrationTests {
         mvc.perform(get("/api/public/" + username)).andExpect(status().isOk()).andExpect(jsonPath("$.template").value("MIDNIGHT"));
         mvc.perform(get("/assets/templates.css")).andExpect(status().isOk());
         mvc.perform(get("/assets/templates.js")).andExpect(status().isOk());
+        mvc.perform(get("/assets/template-layouts.css")).andExpect(status().isOk());
+        mvc.perform(get("/assets/workspace.js")).andExpect(status().isOk());
     }
 
     @Test void redisTimeoutReturns503WithoutBypassingRateLimitOrWritingData() throws Exception {

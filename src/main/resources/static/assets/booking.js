@@ -77,16 +77,6 @@ export async function refreshBookings(){if(dashboard)await loadBookings();}
 
 export function initPublicBooking(username, services) {
   if(!services.length)return;
-  if (document.body.dataset.template === 'STUDIO') {
-    const layout = document.querySelector('.profile-layout');
-    const overview = node('div', undefined, 'studio-overview');
-    const content = node('div', undefined, 'studio-overview-content');
-    const hero = layout.querySelector('.profile-hero');
-    layout.prepend(overview);
-    overview.append(hero, content);
-    for (const id of ['landing-intro', 'services-section', 'landing-details']) content.append(document.getElementById(id));
-    layout.classList.add('has-booking');
-  }
   const section=node('section',undefined,'card profile-booking landing-section');section.id='booking-section';
   section.innerHTML=`<h2>Đặt lịch hẹn</h2><p class="muted">Chọn dịch vụ và ngày để xem giờ còn trống. Lịch sẽ được giữ chỗ ngay khi gửi và chờ chủ profile xác nhận.</p>
     <form id="booking-form"><label>Dịch vụ<select name="serviceId" required></select></label><label>Ngày hẹn<input name="date" type="date" required></label>

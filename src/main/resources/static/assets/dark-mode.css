@@ -53,3 +53,11 @@
   .header-actions button { padding: 10px 12px; }
   body.profile-surface .header-actions { flex-basis: 100%; justify-content: space-between; }
 }
+
+/* Application palette; public profile variables are intentionally independent. */
+:root[data-color-mode="dark"] {
+  --canvas:#151c23; --surface:#1d2732; --ink:#edf2f7; --muted:#b5c1cf;
+  --line:#3a495b; --accent:#a2d6bf; --accent-soft:#2b423c; --on-accent:#152f25;
+  --field:#18232e; --danger-bg:#4b2d2b; --danger-ink:#ffc1b3;
+  background:var(--canvas); color:var(--ink);
+}

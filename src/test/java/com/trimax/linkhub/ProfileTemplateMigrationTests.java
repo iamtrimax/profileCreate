@@ -25,7 +25,13 @@ class ProfileTemplateMigrationTests {
             }
             SQLException invalid = assertThrows(SQLException.class, () -> statement.executeUpdate("update accounts set profile_template='UNKNOWN'"));
             assertTrue(invalid.getSQLState().startsWith("23"));
-            statement.executeUpdate("update accounts set profile_template='BUSINESS'");
+            for (var template : com.trimax.linkhub.domain.ProfileTemplate.values()) {
+                statement.executeUpdate("update accounts set profile_template='" + template.name() + "'");
+                try (var row = statement.executeQuery("select profile_template from accounts where username='existing'")) {
+                    assertTrue(row.next());
+                    assertEquals(template.name(), row.getString(1));
+                }
+            }
             try (var row = statement.executeQuery("select count(*) from landing_blocks")) {
                 assertTrue(row.next());
                 assertEquals(0, row.getInt(1));

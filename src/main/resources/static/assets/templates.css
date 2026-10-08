@@ -47,12 +47,6 @@ body.profile-surface { min-height: 100vh; }
 .profile-surface[data-template="STUDIO"] .public { max-width: 1100px; }
 .profile-layout { min-width: 0; }
 .profile-layout > * { min-width: 0; }
-@media (min-width: 850px) {
-  body.profile-surface[data-template="STUDIO"] .profile-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; }
-  body.profile-surface[data-template="STUDIO"] .profile-hero { grid-column: 1; grid-row: 1 / span 3; position: sticky; top: 24px; z-index: 10; }
-  body.profile-surface[data-template="STUDIO"] :is(.profile-services, .profile-contact, .qr-card,) { grid-column: 2; }
-  body.profile-surface[data-template="STUDIO"] .profile-layout > .card { margin-bottom: 0; }
-}
 .template-fieldset { padding: 0; margin: 24px 0 0; border: 0; min-width: 0; }
 .template-fieldset legend { padding: 0; font-weight: 700; font-size: 15px; }
 .template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
