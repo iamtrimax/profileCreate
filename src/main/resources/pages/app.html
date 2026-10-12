@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LinkHub VN · Không gian của bạn</title><script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/templates.css"><link rel="stylesheet" href="/assets/dark-mode.css"><link rel="stylesheet" href="/assets/landing.css"><link rel="stylesheet" href="/assets/block-reveal.css"><link rel="stylesheet" href="/assets/booking.css"><link rel="stylesheet" href="/assets/dashboard.css"><link rel="stylesheet" href="/assets/notifications.css"><link rel="stylesheet" href="/assets/template-layouts.css"><script src="/assets/app.js" type="module"></script></head>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LinkHub VN · Không gian của bạn</title><script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/templates.css"><link rel="stylesheet" href="/assets/dark-mode.css"><link rel="stylesheet" href="/assets/landing.css"><link rel="stylesheet" href="/assets/block-reveal.css"><link rel="stylesheet" href="/assets/booking.css"><link rel="stylesheet" href="/assets/dashboard.css"><link rel="stylesheet" href="/assets/notifications.css"><link rel="stylesheet" href="/assets/template-layouts.css"><link rel="stylesheet" href="/assets/recruitment.css"><script src="/assets/app.js" type="module"></script></head>
 <body class="app-shell"><a class="skip-link" href="#main-content">Đến nội dung chính</a><header><a class="brand" href="/">LinkHub<span>VN</span></a><span>Một đường link. Mọi kết nối.</span><div class="header-actions"><button type="button" class="secondary theme-toggle" data-theme-toggle aria-pressed="false" hidden><span data-theme-icon aria-hidden="true">☾</span> Chế độ tối</button><button id="logout" class="secondary" hidden>Đăng xuất</button></div></header>
 <main id="main-content" tabindex="-1"><div id="notice" role="status" aria-live="polite" hidden></div>
 <section id="auth" class="auth-layout"><div class="intro"><p class="eyebrow">DÀNH CHO NGƯỜI LÀM NGHỀ ĐỘC LẬP</p><h1>Một nơi để<br>khách hàng<br><em>tìm thấy bạn.</em></h1><p>Giới thiệu bản thân, chia sẻ dịch vụ và nhận yêu cầu — chỉ với một đường link riêng.</p><div class="auth-features"><span class="auth-feature">15 mẫu giao diện</span><span class="auth-feature">Đặt lịch trực tuyến</span><span class="auth-feature">Thống kê kết nối</span></div><div class="auth-sample" aria-hidden="true"><span class="auth-sample-avatar">L</span><div><strong>Không gian mang dấu ấn bạn</strong><small>linkhub.vn / ten-cua-ban</small></div><span>↗</span></div></div>
@@ -8,6 +8,58 @@
 <form id="register-form" hidden><h2>Bắt đầu với LinkHub</h2><label>Tên hiển thị<input name="displayName" required maxlength="100" autocomplete="name"></label><label>Username<input name="username" required pattern="[a-zA-Z0-9][a-zA-Z0-9_]{2,29}" minlength="3" maxlength="30" placeholder="tri" autocomplete="username"></label><small>3–30 ký tự: chữ, số, dấu gạch dưới. Username cố định sau đăng ký.</small><label>Email<input name="email" type="email" required maxlength="254" autocomplete="email"></label><label>Mật khẩu<input name="password" type="password" required minlength="10" maxlength="64" autocomplete="new-password"></label><small>Ít nhất 10 ký tự, tối đa 72 byte UTF-8.</small><button type="submit">Tạo không gian của bạn →</button></form></div></section>
 <section id="dashboard" hidden><div class="heading"><div><p class="eyebrow">KHÔNG GIAN CỦA BẠN</p><h1 id="greeting">Dashboard</h1><a id="public-link" target="_blank" rel="noopener"></a></div><span id="publish-state" class="pill"></span></div>
 <div class="stats"><article class="card"><small>Tổng lượt xem trang</small><strong id="views">0</strong></article><article class="card"><small>Tổng yêu cầu</small><strong id="contacts-count">0</strong></article><article class="card"><small>Yêu cầu chưa đọc</small><strong id="unread">0</strong></article></div>
+<section id="recruitment-panel" hidden>
+<div class="card recruitment-intro"><p class="eyebrow">KẾT NỐI NGHỀ NGHIỆP</p><h2>Một cơ hội phù hợp. Một kết nối mới.</h2><p>Đăng JD, khám phá ngẫu nhiên ứng viên đạt yêu cầu và gửi lời mời. Khi hai bên đồng ý, bạn có thể trò chuyện và hẹn phỏng vấn.</p><button id="recruitment-refresh" type="button" class="secondary">Làm mới tuyển dụng</button></div>
+<nav class="recruitment-tabs" aria-label="M?c tuy?n d?ng">
+<button type="button" class="secondary" data-recruitment-view="opportunities" aria-pressed="true" aria-controls="recruitment-opportunities">Cơ hội</button>
+<button type="button" class="secondary" data-recruitment-view="profile" aria-pressed="false" aria-controls="recruitment-profile">Hồ sơ tìm việc</button>
+<button type="button" class="secondary" data-recruitment-view="hiring" aria-pressed="false" aria-controls="recruitment-hiring">Tuyển dụng</button>
+<button type="button" class="secondary" data-recruitment-view="matches" aria-pressed="false" aria-controls="recruitment-connections">Match <span id="recruitment-match-count">0</span></button>
+</nav>
+<div class="recruitment-grid">
+<section id="recruitment-profile" data-recruitment-section="profile" class="card" hidden><h3>Hồ sơ tìm việc của bạn</h3><p class="muted">Hồ sơ tìm việc độc lập với profile công khai. Chỉ bật tìm việc khi bạn muốn được nhà tuyển dụng khám phá. Email chỉ chia sẻ sau khi bạn đồng ý lời mời.</p>
+<form id="candidate-form"><label class="check"><input type="checkbox" name="seeking"> Cho phép nhà tuyển dụng tìm thấy tôi</label>
+<label>Vị trí mong muốn<input name="desiredRole" required maxlength="120" placeholder="Java Developer"></label>
+<label>Giới thiệu kinh nghiệm<textarea name="summary" maxlength="3000" rows="3"></textarea></label>
+<label>Kỹ năng (phân cách bằng dấu phẩy)<input name="skills" required maxlength="2429" placeholder="Java, Spring Boot, PostgreSQL"></label>
+<div class="recruitment-fields"><label>Số năm kinh nghiệm<input type="number" name="experienceYears" min="0" max="60" value="0" required></label><label>Địa điểm<input name="location" required maxlength="120" placeholder="Hồ Chí Minh"></label></div>
+<label>Hình thức làm việc<select name="workMode"><option value="ANY">Linh hoạt</option><option value="ONSITE">Tại văn phòng</option><option value="HYBRID">Kết hợp</option><option value="REMOTE">Từ xa</option></select></label>
+<div class="recruitment-fields"><label>Lương tối thiểu / tháng (VND)<input name="salaryMin" type="number" min="0" max="999999999999" value="0" required></label><label>Lương tối đa / tháng (VND)<input name="salaryMax" type="number" min="0" max="999999999999" value="0" required></label></div><button type="submit">Lưu hồ sơ tìm việc</button></form></section>
+<section id="recruitment-hiring" data-recruitment-section="hiring" class="card" hidden><h3 id="job-form-title">Đăng bài tuyển dụng</h3><p class="muted">Dán JD của bạn. Hệ thống tự trích xuất thông tin và kỹ năng để tìm ứng viên phù hợp. Kiểm tra bản xem trước trước khi đăng.</p>
+<form id="recruitment-job-form"><input name="id" type="hidden"><label for="recruitment-jd">Nội dung JD gốc</label><textarea id="recruitment-jd" name="description" rows="12" required maxlength="6000" aria-describedby="recruitment-jd-help" placeholder="Dán toàn bộ nội dung tuyển dụng tại đây…"></textarea>
+<p id="recruitment-jd-help" class="muted">JD cần có vị trí, công ty, kỹ năng bắt buộc, địa điểm, hình thức làm việc và lương. Nếu chưa chốt mức lương, ghi “Lương: thỏa thuận”. Bản xem trước bên dưới tự định dạng ngay khi dán. Hỗ trợ Markdown: # tiêu đề, **chữ đậm**, - danh sách, [liên kết](https://example.com).</p>
+<details class="recruitment-markdown-preview"><summary>Bản JD đã định dạng</summary><div id="recruitment-jd-markdown" hidden></div></details>
+<p id="recruitment-jd-status" role="status" aria-live="polite">Thông tin được tự động phân tích khi bạn dán hoặc sửa JD.</p>
+<section id="recruitment-jd-preview" class="recruitment-suggestion" aria-label="Dữ liệu trích xuất từ JD" hidden></section>
+<div class="actions"><button id="recruitment-jd-save" type="submit" disabled>Đăng bài tuyển dụng</button><button id="recruitment-jd-retry" type="button" class="secondary">Phân tích lại</button><button type="reset" class="secondary">Nhập mới</button></div></form></section></div>
+<section data-recruitment-section="hiring" class="card" hidden><div class="heading"><h3>Bài tuyển dụng của bạn</h3><span id="recruitment-job-count" class="pill">0 bài đăng</span></div><div id="recruitment-jobs"></div></section>
+<section id="recruitment-connections" data-recruitment-section="matches" class="card" hidden><h3>Lời mời & match của bạn</h3><p class="muted">Lời mời chờ đồng ý chưa mở liên hệ. Những JD đã gửi lời mời được giữ nguyên nội dung; muốn thay đổi yêu cầu, hãy tạo bài mới.</p>
+<div class="recruitment-filters" role="group" aria-label="Lọc trạng thái match"><button type="button" class="secondary" data-match-filter="ALL" aria-pressed="true">Tất cả</button><button type="button" class="secondary" data-match-filter="PENDING" aria-pressed="false">Chờ đồng ý</button><button type="button" class="secondary" data-match-filter="ACCEPTED" aria-pressed="false">Đã match</button><button type="button" class="secondary" data-match-filter="DECLINED" aria-pressed="false">Đã từ chối</button></div>
+<div id="recruitment-matches"></div></section>
+<section id="recruitment-conversation" class="card recruitment-chat" aria-labelledby="recruitment-conversation-title" hidden>
+<header class="chat-header">
+<div class="chat-identity"><span id="recruitment-chat-avatar" class="chat-avatar" aria-hidden="true"></span><div><p class="chat-eyebrow">TRÒ CHUYỆN TUYỂN DỤNG</p><h3 id="recruitment-conversation-title" tabindex="-1">Trò chuyện</h3><p id="recruitment-conversation-context" class="muted"></p></div></div>
+<button id="recruitment-close-chat" type="button" class="secondary">Quay lại match</button>
+</header>
+<div class="chat-layout">
+<div class="chat-main">
+<div id="recruitment-messages" role="log" aria-label="Lịch sử trò chuyện" aria-live="polite" aria-relevant="additions" tabindex="0"></div>
+<form id="recruitment-message-form" class="chat-composer"><label for="recruitment-message-body">Tin nhắn</label><div class="chat-compose-row"><textarea id="recruitment-message-body" name="body" required maxlength="2000" rows="2" placeholder="Nhập tin nhắn…"></textarea><button type="submit">Gửi</button></div></form>
+</div>
+<aside class="chat-sidebar" aria-label="Thông tin cuộc trao đổi">
+<details class="chat-contact"><summary>Thông tin liên hệ</summary><a id="recruitment-chat-email"></a></details>
+<details id="recruitment-schedule-panel" class="chat-schedule" open><summary>Lịch phỏng vấn <span id="recruitment-interview-count" class="pill">0</span></summary>
+<div id="recruitment-interviews"></div>
+<details id="recruitment-interview-compose" class="chat-interview-compose"><summary>Đề xuất lịch mới</summary>
+<form id="recruitment-interview-form">
+<label for="recruitment-interview-start">Giờ bắt đầu<input id="recruitment-interview-start" name="startsAt" type="datetime-local" required></label>
+<label for="recruitment-interview-duration">Thời lượng (phút)<input id="recruitment-interview-duration" name="durationMinutes" type="number" min="15" max="180" value="30" required></label>
+<label for="recruitment-interview-details">Địa điểm hoặc link cuộc họp<textarea id="recruitment-interview-details" name="meetingDetails" required maxlength="2000" rows="2"></textarea></label>
+<button type="submit">Đề xuất lịch</button><p class="chat-help muted">Theo múi giờ thiết bị. Ứng viên xác nhận lịch; lịch chờ và đã xác nhận đều giữ chỗ.</p>
+</form></details></details>
+</aside></div></section>
+<section id="recruitment-opportunities" data-recruitment-section="opportunities" class="card"><p class="eyebrow">KHÁM PHÁ CÔNG VIỆC</p><h3>Cơ hội đang tuyển</h3><p class="muted">Xem yêu cầu và mức lương. Hoàn thiện hồ sơ để nhà tuyển dụng có thể tìm thấy bạn.</p><div id="recruitment-feed"></div><div class="actions"><button id="recruitment-feed-prev" type="button" class="secondary">← Trước</button><span id="recruitment-feed-page"></span><button id="recruitment-feed-next" type="button" class="secondary">Sau →</button></div></section>
+</section>
 <div class="workspace"><div class="workspace-group"><section class="card profile-editor" id="profile-editor"><div class="heading"><h2>Thông tin & phong cách</h2><button type="submit" form="profile-form">Lưu profile</button></div><div class="profile-editor-layout">
 <form id="profile-form">
   <label>Tên hiển thị<input name="displayName" required maxlength="100"></label>

@@ -9,9 +9,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Map;
+import java.util.LinkedHashMap;
+import com.trimax.linkhub.service.GroqRequestException;
+import org.slf4j.LoggerFactory;
 
 @RestControllerAdvice
 public class ApiErrors {
+    @ExceptionHandler(GroqRequestException.class)
+    ResponseEntity<?> groq(GroqRequestException error) {
+        LoggerFactory.getLogger(ApiErrors.class).warn("Groq JD request failed code={} providerStatus={} providerRequestId={}",error.code(),error.providerStatus(),error.providerRequestId());
+        Map<String,Object> body=new LinkedHashMap<>();body.put("message",error.getReason());body.put("code",error.code());body.put("retryable",error.retryable());
+        var response=ResponseEntity.status(error.getStatusCode());
+        if(error.retryAfterSeconds()!=null){response.header(HttpHeaders.RETRY_AFTER,error.retryAfterSeconds().toString());body.put("retryAfterSeconds",error.retryAfterSeconds());}
+        return response.body(body);
+    }
     @ExceptionHandler(ResponseStatusException.class)
     ResponseEntity<?> status(ResponseStatusException e) { return ResponseEntity.status(e.getStatusCode()).body(Map.of("message", e.getReason() == null ? "Yêu cầu không hợp lệ." : e.getReason())); }
     @ExceptionHandler(AuthenticationException.class)

@@ -1,0 +1,140 @@
+﻿/* Recruitment uses the workspace's semantic tokens in both color modes. */
+#recruitment-panel{min-width:0}
+#recruitment-panel [hidden]{display:none!important}
+#recruitment-panel .card{margin-bottom:24px;min-width:0}
+#recruitment-panel h3{margin-top:0;font-size:22px;letter-spacing:-.4px}
+#recruitment-panel h4{margin:12px 0 8px;font-size:19px;line-height:1.4}
+#recruitment-panel h5{font-size:14px;margin:20px 0 8px}
+.recruitment-intro{border-top:3px solid var(--accent);padding:28px!important}
+.recruitment-intro h2{font-size:clamp(24px,3vw,34px);line-height:1.2;letter-spacing:-.8px;max-width:620px;text-wrap:balance}
+.recruitment-intro>p:not(.eyebrow){max-width:680px;color:var(--muted);line-height:1.7}
+.recruitment-tabs,.recruitment-filters{display:flex;flex-wrap:wrap;gap:8px}
+.recruitment-tabs{margin:0 0 24px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+#recruitment-panel .recruitment-tabs button,#recruitment-panel .recruitment-filters button{background:transparent;color:var(--muted);min-height:44px}
+#recruitment-panel :is(.recruitment-tabs,.recruitment-filters) button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+#recruitment-match-count{display:inline-block;min-width:22px;padding:2px 6px;border-radius:6px;background:var(--surface);color:var(--ink);margin-left:6px;font-variant-numeric:tabular-nums}
+.recruitment-filters{margin:20px 0}
+.recruitment-grid{display:grid;grid-template-columns:minmax(0,1fr)}
+.recruitment-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+#recruitment-panel form{max-width:820px}
+#recruitment-panel label{line-height:1.5}
+#recruitment-panel :is(input,select,textarea){font-size:16px;min-height:44px;max-width:100%}
+#recruitment-panel .check{padding:16px;background:var(--canvas);border:1px solid var(--line);border-radius:10px;gap:12px}
+#recruitment-panel .check input{min-height:initial}
+#recruitment-panel :is(button,summary){cursor:pointer;touch-action:manipulation}
+#recruitment-panel :is(button,a,input,textarea,select,summary):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+#recruitment-panel .actions{flex-wrap:wrap;gap:10px;margin-top:20px}
+#recruitment-panel .preserve{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}
+#recruitment-feed,#recruitment-matches,#recruitment-jobs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.recruitment-job,.recruitment-match{padding:24px;border:1px solid var(--line);border-radius:12px;overflow-wrap:anywhere;min-width:0;background:var(--surface)}
+#recruitment-jobs{grid-template-columns:minmax(0,1fr)}
+.recruitment-salary{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.recruitment-suggestion{margin-top:20px;padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--canvas)}
+.recruitment-suggestion h4{margin-top:0}
+.recruitment-candidate{margin-top:20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden;min-width:0}
+.candidate-header{display:flex;align-items:center;gap:16px;padding:24px}
+.candidate-avatar{display:grid;place-items:center;flex:0 0 56px;width:56px;height:56px;border-radius:16px;background:var(--accent-soft);color:var(--accent);font-size:22px;font-weight:700}
+.candidate-identity{flex:1;min-width:0}
+#recruitment-panel .candidate-name{margin:0;font-size:24px;line-height:1.3;letter-spacing:-.5px;overflow-wrap:anywhere}
+.candidate-role{margin:6px 0 0;color:var(--muted);font-size:16px}
+.candidate-badge{flex-shrink:0;font-size:12px;white-space:normal}
+.candidate-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:20px 24px;margin:0;border-block:1px solid var(--line);background:var(--canvas)}
+.candidate-facts>div{min-width:0}
+.candidate-facts dt{font-size:13px;color:var(--muted);margin-bottom:6px}
+.candidate-facts dd{margin:0;font-size:16px;font-weight:600;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.candidate-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;padding:24px;align-items:start}
+.candidate-profile,.candidate-fit{min-width:0}
+#recruitment-panel .candidate-body :is(h5,h6){font-size:14px;margin:0 0 12px;line-height:1.5;letter-spacing:0}
+.candidate-profile>.preserve{margin:0 0 24px;font-size:15px}
+.candidate-summary{margin-bottom:24px}
+.candidate-fit{padding:20px;background:var(--canvas);border:1px solid var(--line);border-radius:12px}
+.candidate-fit>p{font-size:13px;margin:0 0 16px}
+.candidate-reasons{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.candidate-reasons li{position:relative;padding-left:22px;font-size:14px;line-height:1.65;overflow-wrap:anywhere}
+.candidate-reasons li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700}
+.candidate-skill-required{border:1px solid var(--accent)}
+.candidate-skill-required small{font-size:inherit;color:inherit}
+.candidate-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:none;margin:0;padding:20px 24px;border-top:1px solid var(--line);text-align:left}
+.candidate-privacy{flex:1 1 200px;max-width:360px;font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+#recruitment-panel .candidate-footer .actions{margin:0}
+.candidate-footer button{min-height:44px}
+.candidate-status{margin:20px 0 0;color:var(--muted);font-size:14px;line-height:1.6}
+.candidate-empty{margin-top:16px;padding:28px;border:1px dashed var(--line);border-radius:14px;background:var(--canvas)}
+.candidate-empty button{margin:8px 8px 0 0;min-height:44px}
+.recruitment-match .candidate-body{grid-template-columns:minmax(0,1fr)}
+.recruitment-match .candidate-header{padding:16px}
+#recruitment-panel .recruitment-match .candidate-name{font-size:20px}
+@media(max-width:1000px){.candidate-body{grid-template-columns:minmax(0,1fr)}.candidate-header{flex-wrap:wrap}.candidate-badge{margin-left:72px}}
+@media(max-width:600px){.candidate-header,.candidate-body,.candidate-footer{padding:16px}.candidate-facts{padding:16px;gap:16px}.candidate-badge{margin-left:0}.candidate-footer .actions{width:100%}.candidate-footer button{width:100%}.candidate-fit{padding:16px}.candidate-empty{padding:20px}#recruitment-panel .candidate-name{font-size:22px}}
+.recruitment-tags{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.recruitment-tags span{padding:6px 10px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:13px;max-width:100%;overflow-wrap:anywhere}
+.recruitment-reasons{padding-left:20px;line-height:1.8;color:var(--muted)}
+.recruitment-extracted{display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,2fr);gap:12px;margin:20px 0}
+.recruitment-extracted dt{color:var(--muted)}
+.recruitment-extracted dd{margin:0;overflow-wrap:anywhere;font-weight:600}
+.recruitment-jd-warning{padding:16px;border-left:3px solid var(--danger-ink);background:var(--danger-bg);color:var(--danger-ink);border-radius:8px;line-height:1.7}
+.recruitment-markdown-preview{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:0 16px;background:var(--canvas)}
+.jd-markdown{font-size:15px;line-height:1.75;overflow-wrap:anywhere;color:var(--ink)}
+.jd-markdown p{white-space:pre-line;margin:12px 0}
+#recruitment-panel .jd-markdown :is(h5,h6){margin:24px 0 12px;line-height:1.4;font-weight:700}
+#recruitment-panel .jd-markdown h5{font-size:20px}
+#recruitment-panel .jd-markdown h6{font-size:17px}
+#recruitment-panel .recruitment-markdown-preview .jd-markdown{padding:8px 4px 20px}
+#recruitment-panel .jd-markdown>h5:first-child{margin-top:8px;font-size:24px}
+#recruitment-panel .jd-markdown h6{padding-bottom:10px;border-bottom:1px solid var(--line)}
+.jd-markdown :is(ul,ol){padding-left:24px;margin:12px 0}
+.jd-markdown li{margin:6px 0}
+.jd-markdown blockquote{margin:16px 0;padding:8px 16px;border-left:3px solid var(--accent);background:var(--canvas);color:var(--muted)}
+.jd-markdown code{font-family:Consolas,monospace;font-size:.9em;background:var(--canvas);padding:2px 5px;border:1px solid var(--line);border-radius:4px}
+.jd-markdown pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:var(--canvas);border:1px solid var(--line);border-radius:8px}
+.jd-markdown pre code{padding:0;border:0;background:transparent}
+.jd-markdown a{text-decoration:underline;text-underline-offset:3px}
+.jd-markdown hr{border:0;border-top:1px solid var(--line);margin:20px 0}
+#recruitment-panel summary{padding:12px 0;min-height:44px;font-weight:600;color:var(--accent)}
+.recruitment-empty{grid-column:1/-1;padding:32px;text-align:center;background:var(--canvas);border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
+#recruitment-conversation{scroll-margin-top:24px;padding:0;overflow:hidden;border:1px solid var(--line)}
+.chat-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.chat-identity{display:flex;align-items:center;gap:12px;min-width:0}
+.chat-identity>div{min-width:0}
+.chat-avatar{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;background:var(--accent-soft);color:var(--accent);border-radius:12px;font-weight:700}
+#recruitment-panel .chat-header h3{font-size:18px;line-height:1.4;margin:0;overflow-wrap:anywhere}
+.chat-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin:0 0 3px}
+#recruitment-conversation-context{font-size:13px;line-height:1.5;margin:3px 0 0;overflow-wrap:anywhere}
+.chat-header button{flex-shrink:0;min-height:44px}
+.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,300px)}
+.chat-main{min-width:0;display:flex;flex-direction:column}
+#recruitment-messages{height:clamp(280px,48dvh,460px);overflow:auto;padding:16px 20px;background:var(--canvas);scrollbar-gutter:stable}
+.chat-day{text-align:center;font-size:12px;color:var(--muted);margin:12px 0 16px}
+.recruitment-message{width:fit-content;max-width:85%;background:var(--surface);border:1px solid var(--line);border-radius:12px 12px 12px 4px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere}
+.recruitment-message.mine{margin-left:auto;background:var(--accent-soft);border-radius:12px 12px 4px 12px}
+.chat-message-meta{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted)}
+.chat-message-meta strong{font-weight:600;color:var(--ink)}
+.chat-message-meta time{font-variant-numeric:tabular-nums}
+#recruitment-panel .recruitment-message p{margin:5px 0 0;font-size:14px;line-height:1.6}
+#recruitment-panel .chat-composer{max-width:none;padding:12px 16px;border-top:1px solid var(--line);margin:0}
+.chat-composer>label{font-size:12px;color:var(--muted);margin:0 0 4px}
+.chat-compose-row{display:flex;align-items:flex-end;gap:10px}
+#recruitment-panel .chat-compose-row textarea{margin:0;min-height:64px;max-height:140px;padding:10px 12px;flex:1}
+.chat-compose-row button{min-height:44px;min-width:64px;margin:0}
+.chat-sidebar{min-width:0;padding:12px 16px;border-left:1px solid var(--line);max-height:600px;overflow:auto;background:var(--surface)}
+.chat-sidebar a{display:block;font-size:14px;overflow-wrap:anywhere;margin:0 0 12px}
+.chat-contact{border-bottom:1px solid var(--line)}
+#recruitment-panel .chat-sidebar summary{font-size:14px;min-height:44px;line-height:1.5;padding:12px 0}
+#recruitment-interview-count{font-size:11px;margin-left:6px;padding:2px 6px}
+.chat-interview{padding:12px 0;border-bottom:1px solid var(--line)}
+#recruitment-panel .chat-interview p{font-size:13px;line-height:1.6;margin:6px 0}
+.chat-interview time{font-size:13px;font-weight:600;line-height:1.6}
+.chat-interview .pill{font-size:11px;padding:3px 7px;margin-bottom:6px}
+#recruitment-panel .chat-interview .actions{margin:10px 0 0;gap:6px}
+.chat-interview button{min-height:44px;padding:8px 10px;font-size:13px}
+.chat-interview-compose{margin-top:8px}
+#recruitment-panel .chat-interview-compose label{font-size:13px;margin:0 0 12px}
+#recruitment-panel .chat-interview-compose input,#recruitment-panel .chat-interview-compose textarea{padding:8px 10px;margin-top:5px}
+#recruitment-panel .chat-interview-compose form>button{margin:0;width:100%;min-height:44px}
+.chat-help{font-size:12px;line-height:1.6;margin:10px 0}
+@media(max-width:960px){.chat-layout{grid-template-columns:minmax(0,1fr)}.chat-sidebar{border-left:0;border-top:1px solid var(--line);max-height:none}.chat-header{padding:14px 16px}.chat-identity{align-items:flex-start}.chat-header{flex-wrap:wrap}#recruitment-messages{height:clamp(240px,42dvh,380px);padding:12px 16px}.chat-header button{margin-left:auto}.recruitment-message{max-width:92%}}
+@media(max-width:1100px){#recruitment-feed,#recruitment-matches{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.recruitment-fields{grid-template-columns:minmax(0,1fr);gap:0}.recruitment-tabs button{flex:1 1 40%;font-size:14px}.recruitment-intro{padding:20px!important}.recruitment-job,.recruitment-match,.recruitment-suggestion{padding:16px}#recruitment-panel .actions button{flex:1 1 auto}}
+@media(prefers-reduced-motion:reduce){#recruitment-panel *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+.candidate-score{font-weight:700;font-size:1.15rem}.candidate-fit meter{width:100%;height:1rem;margin-bottom:.75rem}.candidate-gaps{padding-left:1.25rem;color:var(--muted)}

@@ -6,12 +6,14 @@ const pages = [
   ['content', 'Nội dung & dịch vụ', 'Những điều bạn muốn chia sẻ với khách hàng.', 'M5 4h14v16H5z M9 8h6 M9 12h6 M9 16h4'],
   ['bookings', 'Lịch hẹn', 'Sắp xếp thời gian và quản lý các cuộc hẹn.', 'M4 6h16v15H4z M8 3v6 M16 3v6 M4 11h16'],
   ['inbox', 'Hộp thư', 'Tiếp nối những kết nối mới.', 'M3 5h18v14H3z M3 5l9 7 9-7'],
+  ['recruitment', 'Tuyển dụng', 'Tìm cơ hội, khám phá ứng viên và hẹn phỏng vấn.', 'M4 7h16v14H4z M9 7V3h6v4 M4 12h16 M10 12v3h4v-3'],
   ['account', 'Tài khoản', 'Thông tin và bảo mật tài khoản của bạn.', 'M8 7a4 4 0 1 0 8 0a4 4 0 1 0-8 0 M4 21v-2a8 8 0 0 1 16 0v2']
 ];
 let current = 'overview';
 let ready = false;
 const groups = {
   overview: '.stats, #upcoming-reminders, #analytics-panel, #overview-start',
+  recruitment: '#recruitment-panel',
   design: '#profile-editor',
   content: '#links-editor, #services-editor, #landing-editor',
   bookings: '.booking-dashboard', inbox: '#inbox-panel', account: '#account'

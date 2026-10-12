@@ -6,6 +6,7 @@ const paths = {
   bell: 'M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9 M10 21h4',
   inbox: 'M3 5h18v14H3z M3 5l9 7 9-7',
   bookings: 'M4 6h16v15H4z M8 3v6 M16 3v6 M4 11h16',
+  recruitment: 'M4 7h16v14H4z M9 7V3h6v4 M4 12h16',
   account: 'M12 3l8 3v6c0 5-8 9-8 9s-8-4-8-9V6z M8 12l3 3 5-6',
   close: 'M6 6l12 12 M18 6L6 18',
   check: 'M5 12l4 4L19 6'
@@ -118,8 +119,8 @@ function draw(data) {
     list.append(empty);
   }
   for(const item of data.items) {
-    const category=item.target==='inbox'?'inbox':item.target==='account'?'account':'bookings';
-    const label={inbox:'Hộp thư',account:'Tài khoản',bookings:'Lịch hẹn'}[category];
+    const category=item.target==='inbox'?'inbox':item.target==='account'?'account':item.target==='recruitment'?'recruitment':'bookings';
+    const label={inbox:'Hộp thư',account:'Tài khoản',bookings:'Lịch hẹn',recruitment:'Tuyển dụng'}[category];
     const row=node('article',undefined,'notification-item'+(item.readAt?'':' unread')); row.dataset.id=item.id;
     const symbol=node('div',undefined,'notification-symbol'); symbol.append(icon(category));
     const content=node('div',undefined,'notification-content');
@@ -134,7 +135,7 @@ function draw(data) {
       // Navigation remains available even if a subsequent background refresh fails.
       closePanel();
       window.dispatchEvent(new CustomEvent('linkhub:open-workspace',{detail:category}));
-      const target=document.getElementById(category==='inbox'?'inbox':category==='account'?'account':'bookings-list');
+      const target=document.getElementById(category==='inbox'?'inbox':category==='account'?'account':category==='recruitment'?'recruitment-matches':'bookings-list');
       if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});}
       reload().catch(()=>setConnection('Chưa cập nhật được. Hãy thử làm mới.'));
     },'secondary notification-open'));

@@ -14,7 +14,9 @@ export async function api(path, method = 'GET', body) {
   const response = await fetch('/api' + path, {method, credentials: 'same-origin', headers, body: body === undefined ? undefined : JSON.stringify(body)});
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
-    throw new Error(error.message || `Yêu cầu thất bại (${response.status}).`);
+    const failure=new Error(error.message || `Yêu cầu thất bại (${response.status}).`);
+    failure.code=error.code;failure.retryable=error.retryable;
+    throw failure;
   }
   return response.status === 204 ? null : response.json();
 }

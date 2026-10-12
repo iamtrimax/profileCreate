@@ -1,0 +1,29 @@
+BẢN MÔ TẢ CÔNG VIỆC
+Frontend Developer
+Quarry Systems
+CÔNG TY
+Quarry Systems
+TRẠNG THÁI
+OPEN
+ĐỊA CHỈ CÔNG TY
+Tầng 4, Tòa nhà Songseok, 13 Yeongdong-daero 85-
+gil, Gangnam-gu, Seoul
+ĐỊA CHỈ LÀM VIỆC
+Tầng 4, Tòa nhà Songseok, 13 Yeongdong-daero 85-
+gil, Gangnam-gu, Seoul
+NGÀNH NGHỀ
+Công nghệ thông tin
+VỊ TRÍ TUYỂN DỤNG
+Front-End Developer
+Mô tả công việc
+Quarry Systems phát triển nền tảng dành cho các tổ chức
+tài chính và doanh nghiệp lớn.
+Phát triển giao diện Web Dashboard bằng ReactJS và TypeScript.
+Yêu cầu tuyển dụng
+Tối thiểu 2 năm kinh nghiệm Frontend.
+Có kinh nghiệm sử dụng Redux Toolkit hoặc Context API.
+Ưu tiên
+Có hiểu biết về Docker hoặc CI/CD.
+Quyền lợi và chế độ
+Hình thức: Freelance.
+Lương thoả thuận. Phỏng vấn online.

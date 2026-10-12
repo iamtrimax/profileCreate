@@ -68,6 +68,8 @@ public class BookingService {
         Instant dayStart=date.atStartOfDay(zone).toInstant(), dayEnd=date.plusDays(1).atStartOfDay(zone).toInstant();
         List<Slot> busy=jdbc.query("select starts_at,ends_at from bookings where owner_id=? and status in ('PENDING','CONFIRMED') and starts_at<? and ends_at>?",
                 (r,n)->new Slot(r.getTimestamp(1).toInstant(),r.getTimestamp(2).toInstant()),owner.id(),Timestamp.from(dayEnd),Timestamp.from(dayStart));
+        busy.addAll(jdbc.query("select starts_at,ends_at from recruitment_interviews where (recruiter_id=? or candidate_id=?) and status in ('PENDING','CONFIRMED') and starts_at<? and ends_at>?",
+                (r,n)->new Slot(r.getTimestamp(1).toInstant(),r.getTimestamp(2).toInstant()),owner.id(),owner.id(),Timestamp.from(dayEnd),Timestamp.from(dayStart)));
         TreeMap<Instant,Slot> result=new TreeMap<>();
         Instant now=clock.instant();
         for(Rule w:windows) {

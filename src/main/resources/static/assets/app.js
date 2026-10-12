@@ -1,3 +1,4 @@
+import {loadRecruitment, refreshRecruitment} from './recruitment.js';
 import {initWorkspace} from './workspace.js';
 import {api, refreshCsrf, $, node, notice, action, busy, form, money} from './common.js';
 import {templates, renderTemplatePicker, renderPreview} from './templates.js';
@@ -43,9 +44,9 @@ async function dashboard() {
   $('public-link').hidden = !me.published;
   $('qr-box').hidden = !me.published;
   if (me.published) { $('qr').src = `/api/public/${me.username}/qr`; $('qr-download').href = $('qr').src; }
-  await Promise.all([loadLinks(), loadServices(), loadSections(), loadInbox(), loadAnalytics(), loadBookingDashboard(),startReminders()]);
+  await Promise.all([loadLinks(), loadServices(), loadSections(), loadInbox(), loadAnalytics(), loadBookingDashboard(),startReminders(),loadRecruitment(me)]);
   initWorkspace();
-  await startNotifications(()=>Promise.all([loadInbox(),loadAnalytics(),refreshBookings(),refreshReminders()]));
+  await startNotifications(()=>Promise.all([loadInbox(),loadAnalytics(),refreshBookings(),refreshReminders(),refreshRecruitment()]));
 }
 form('profile-form', async data => { me = await api('/me/profile', 'PUT', {displayName: data.displayName, bio: data.bio, published: data.published === 'on', template: data.template}); await dashboard(); notice('Đã lưu profile và mẫu giao diện.'); });
 function edit(formId, item) { const fields = $(formId).elements; for (const [key, value] of Object.entries(item)) if (fields.namedItem(key)) fields.namedItem(key).value = value; $(formId).scrollIntoView({behavior: 'smooth', block: 'center'}); }
