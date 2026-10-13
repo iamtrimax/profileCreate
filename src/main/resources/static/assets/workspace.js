@@ -1,3 +1,4 @@
+import {bindText} from './i18n.js';
 import {node} from './common.js';
 
 const pages = [
@@ -32,8 +33,8 @@ export function selectWorkspace(value, focus = false) {
     else link.removeAttribute('aria-current');
   });
   const title = document.getElementById('workspace-title');
-  title.textContent = page[1];
-  document.getElementById('workspace-description').textContent = page[2];
+  bindText(title, page[1]);
+  bindText(document.getElementById('workspace-description'), page[2]);
   if (focus) { title.focus({preventScroll: true}); title.scrollIntoView({block: 'start'}); }
 }
 

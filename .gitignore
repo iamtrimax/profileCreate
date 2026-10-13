@@ -39,3 +39,4 @@ build/
 ### Python caches ###
 __pycache__/
 *.pyc
+.agents
