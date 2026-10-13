@@ -1,4 +1,4 @@
-import {node} from './common.js';
+import {node, rawNode} from './common.js';
 
 export const sectionTypes = [
   {id: 'ABOUT', title: 'Giới thiệu', anchor: 'about-section', area: 'intro'},
@@ -21,8 +21,8 @@ export function renderSections(container, sections, area, preview = false) {
     items.forEach((item, index) => {
       const row = node(type.id === 'FAQ' ? 'details' : 'article', undefined, 'section-item');
       if (type.id === 'PROCESS') row.append(node('span', String(index + 1).padStart(2, '0'), 'step-number'));
-      row.append(node(type.id === 'FAQ' ? 'summary' : 'h3', item.title));
-      row.append(node('p', item.body, 'preserve'));
+      row.append(rawNode(type.id === 'FAQ' ? 'summary' : 'h3', item.title));
+      row.append(rawNode('p', item.body, 'preserve'));
       if (item.url) {
         const link = node(preview ? 'span' : 'a', 'Xem chi tiết ↗', 'section-link');
         if (!preview) { link.href = item.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; }

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LinkHub VN · Không gian của bạn</title><script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/templates.css"><link rel="stylesheet" href="/assets/dark-mode.css"><link rel="stylesheet" href="/assets/landing.css"><link rel="stylesheet" href="/assets/block-reveal.css"><link rel="stylesheet" href="/assets/booking.css"><link rel="stylesheet" href="/assets/dashboard.css"><link rel="stylesheet" href="/assets/notifications.css"><link rel="stylesheet" href="/assets/template-layouts.css"><link rel="stylesheet" href="/assets/recruitment.css"><script src="/assets/app.js" type="module"></script></head>
-<body class="app-shell"><a class="skip-link" href="#main-content">Đến nội dung chính</a><header><a class="brand" href="/">LinkHub<span>VN</span></a><span>Một đường link. Mọi kết nối.</span><div class="header-actions"><select data-language-select aria-label="Ng&#244;n ng&#7919; / Language"><option value="vi">Ti&#7871;ng Vi&#7879;t</option><option value="en">English</option></select><button type="button" class="secondary theme-toggle" data-theme-toggle aria-pressed="false" hidden><span data-theme-icon aria-hidden="true">☾</span> Chế độ tối</button><button id="logout" class="secondary" hidden>Đăng xuất</button></div></header>
+<body class="app-shell"><a class="skip-link" href="#main-content">Đến nội dung chính</a><header><a class="brand" href="/">LinkHub<span>VN</span></a><span>Một đường link. Mọi kết nối.</span><div class="header-actions"><select data-language-select aria-label="Ngôn ngữ"><option value="vi">Ti&#7871;ng Vi&#7879;t</option><option value="en">English</option></select><button type="button" class="secondary theme-toggle" data-theme-toggle aria-pressed="false" hidden><span data-theme-icon aria-hidden="true">☾</span> Chế độ tối</button><button id="logout" class="secondary" hidden>Đăng xuất</button></div></header>
 <main id="main-content" tabindex="-1"><div id="notice" role="status" aria-live="polite" hidden></div>
 <section id="auth" class="auth-layout"><div class="intro"><p class="eyebrow">DÀNH CHO NGƯỜI LÀM NGHỀ ĐỘC LẬP</p><h1>Một nơi để<br>khách hàng<br><em>tìm thấy bạn.</em></h1><p>Giới thiệu bản thân, chia sẻ dịch vụ và nhận yêu cầu — chỉ với một đường link riêng.</p><div class="auth-features"><span class="auth-feature">15 mẫu giao diện</span><span class="auth-feature">Đặt lịch trực tuyến</span><span class="auth-feature">Thống kê kết nối</span></div><div class="auth-sample" aria-hidden="true"><span class="auth-sample-avatar">L</span><div><strong>Không gian mang dấu ấn bạn</strong><small>linkhub.vn / ten-cua-ban</small></div><span>↗</span></div></div>
 <div class="card"><div class="tabs"><button id="show-login" aria-pressed="true">Đăng nhập</button><button id="show-register" class="secondary" aria-pressed="false">Tạo tài khoản</button></div>
@@ -10,7 +10,7 @@
 <div class="stats"><article class="card"><small>Tổng lượt xem trang</small><strong id="views">0</strong></article><article class="card"><small>Tổng yêu cầu</small><strong id="contacts-count">0</strong></article><article class="card"><small>Yêu cầu chưa đọc</small><strong id="unread">0</strong></article></div>
 <section id="recruitment-panel" hidden>
 <div class="card recruitment-intro"><p class="eyebrow">KẾT NỐI NGHỀ NGHIỆP</p><h2>Một cơ hội phù hợp. Một kết nối mới.</h2><p>Đăng JD, khám phá ngẫu nhiên ứng viên đạt yêu cầu và gửi lời mời. Khi hai bên đồng ý, bạn có thể trò chuyện và hẹn phỏng vấn.</p><button id="recruitment-refresh" type="button" class="secondary">Làm mới tuyển dụng</button></div>
-<nav class="recruitment-tabs" aria-label="M?c tuy?n d?ng">
+<nav class="recruitment-tabs" aria-label="Mục tuyển dụng">
 <button type="button" class="secondary" data-recruitment-view="opportunities" aria-pressed="true" aria-controls="recruitment-opportunities">Cơ hội</button>
 <button type="button" class="secondary" data-recruitment-view="profile" aria-pressed="false" aria-controls="recruitment-profile">Hồ sơ tìm việc</button>
 <button type="button" class="secondary" data-recruitment-view="hiring" aria-pressed="false" aria-controls="recruitment-hiring">Tuyển dụng</button>
@@ -38,7 +38,7 @@
 <div id="recruitment-matches"></div></section>
 <section id="recruitment-conversation" class="card recruitment-chat" aria-labelledby="recruitment-conversation-title" hidden>
 <header class="chat-header">
-<div class="chat-identity"><span id="recruitment-chat-avatar" class="chat-avatar" aria-hidden="true"></span><div><p class="chat-eyebrow">TRÒ CHUYỆN TUYỂN DỤNG</p><h3 id="recruitment-conversation-title" tabindex="-1">Trò chuyện</h3><p id="recruitment-conversation-context" class="muted"></p></div></div>
+<div class="chat-identity"><span id="recruitment-chat-avatar" data-i18n-ignore class="chat-avatar" aria-hidden="true"></span><div><p class="chat-eyebrow">TRÒ CHUYỆN TUYỂN DỤNG</p><h3 id="recruitment-conversation-title" data-i18n-ignore tabindex="-1">Trò chuyện</h3><p id="recruitment-conversation-context" data-i18n-ignore class="muted"></p></div></div>
 <button id="recruitment-close-chat" type="button" class="secondary">Quay lại match</button>
 </header>
 <div class="chat-layout">
@@ -47,7 +47,7 @@
 <form id="recruitment-message-form" class="chat-composer"><label for="recruitment-message-body">Tin nhắn</label><div class="chat-compose-row"><textarea id="recruitment-message-body" name="body" required maxlength="2000" rows="2" placeholder="Nhập tin nhắn…"></textarea><button type="submit">Gửi</button></div></form>
 </div>
 <aside class="chat-sidebar" aria-label="Thông tin cuộc trao đổi">
-<details class="chat-contact"><summary>Thông tin liên hệ</summary><a id="recruitment-chat-email"></a></details>
+<details class="chat-contact"><summary>Thông tin liên hệ</summary><a id="recruitment-chat-email" data-i18n-ignore></a></details>
 <details id="recruitment-schedule-panel" class="chat-schedule" open><summary>Lịch phỏng vấn <span id="recruitment-interview-count" class="pill">0</span></summary>
 <div id="recruitment-interviews"></div>
 <details id="recruitment-interview-compose" class="chat-interview-compose"><summary>Đề xuất lịch mới</summary>

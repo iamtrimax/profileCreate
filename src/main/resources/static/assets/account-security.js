@@ -1,4 +1,4 @@
-import {api,$,node,action,form,notice,refreshCsrf} from './common.js';
+import {api,$,node,action,form,notice,refreshCsrf, rawNode} from './common.js';
 
 export function initAccountSecurity(){
   const forgot=node('form');forgot.id='forgot-form';forgot.hidden=true;
@@ -29,7 +29,7 @@ export function renderAccount(me){
   if(!me)return;
   let panel=$('account');if(!panel){panel=node('section',undefined,'card account-security');panel.id='account';$('profile-editor').before(panel);}
   const info=node('div',undefined,'account-security-copy');
-  info.append(node('h2','Bảo mật tài khoản'),node('p',me.email),node('p',me.emailVerified?'✓ Email đã xác minh':'Email chưa được xác minh','muted'));
+  info.append(node('h2','Bảo mật tài khoản'),rawNode('p',me.email),node('p',me.emailVerified?'✓ Email đã xác minh':'Email chưa được xác minh','muted'));
   panel.replaceChildren(info);
   if(!me.emailVerified)panel.append(action('Gửi email xác minh',async()=>{await api('/me/email-verification','POST');notice('Đã yêu cầu gửi email xác minh. Liên kết có hiệu lực 24 giờ.');}));
 }

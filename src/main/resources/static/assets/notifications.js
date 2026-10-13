@@ -1,4 +1,5 @@
-import {api, node} from './common.js';
+import {locale, getLanguage} from './i18n.js';
+import {api, node, rawNode} from './common.js';
 
 let panel, badge, connection, reconnectTimer, pollingTimer, page=0, unreadOnly=false;
 let refreshBusinessData, lastIds=null, active=false, requestVersion=0, unreadCount=0, lastDraw='';
@@ -21,6 +22,17 @@ function showError(error) {
   const message=panel.querySelector('#notifications-error');
   message.textContent=error?.message || 'Chưa tải được thông báo. Bạn hãy thử làm mới.';
   message.hidden=false;
+}
+function notificationBody(item) {
+  if(item.kind==='CONTACT_NEW'||item.kind==='RECRUITMENT_MESSAGE')return rawNode('p',item.body,'preserve');
+  if(!item.kind.startsWith('BOOKING_'))return node('p',item.body,'preserve');
+  const body=node('p',undefined,'preserve');
+  item.body.split('\n').forEach((line,index)=>{
+    if(index)body.append(document.createTextNode('\n'));
+    const systemLabel=/^(Trạng thái:|Khách:|Khách hàng:|Mã lịch:)/.test(line);
+    body.append((systemLabel?node:rawNode)('span',line));
+  });
+  return body;
 }
 function control(text, handler, className='secondary') {
   const button=node('button',text,className); button.type='button';
@@ -126,9 +138,9 @@ function draw(data) {
     const content=node('div',undefined,'notification-content');
     const meta=node('div',undefined,'notification-meta');
     meta.append(node('span',label,'notification-category'));
-    const time=node('time',new Date(item.createdAt).toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})); time.dateTime=item.createdAt;
+    const time=node('time',new Date(item.createdAt).toLocaleString(locale(),{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})); time.dateTime=item.createdAt;
     meta.append(time); if(!item.readAt)meta.append(node('span','Chưa đọc','notification-unread-label'));
-    content.append(meta,node('h3',item.title),node('p',item.body,'preserve'));
+    content.append(meta,node('h3',item.title),notificationBody(item));
     const buttons=node('div',undefined,'notification-actions');
     buttons.append(control('Mở '+label.toLowerCase()+' →',async()=>{
       await api(`/me/notifications/${item.id}/read`,'PATCH');
@@ -183,7 +195,7 @@ function connect() {
     reconnectTimer=setTimeout(async()=>{
       try {
         // Reauthenticate on reconnect; do not keep an expired session's stream alive.
-        const response=await fetch('/api/me',{credentials:'same-origin'});
+        const response=await fetch('/api/me',{credentials:'same-origin',headers:{'Accept-Language':getLanguage()}});
         if(response.status===401){stopNotifications();setConnection('Phiên đã hết hạn. Vui lòng đăng nhập lại.');return;}
       }catch{/* The next connection will retry after an outage. */}
       connect();

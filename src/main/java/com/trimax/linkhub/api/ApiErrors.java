@@ -48,5 +48,12 @@ public class ApiErrors {
                 .header(HttpHeaders.RETRY_AFTER, "5")
                 .body(Map.of("message", "Dịch vụ dữ liệu đang bận hoặc mất kết nối. Vui lòng thử lại sau ít giây."));
     }
+    @ExceptionHandler(Exception.class)
+    ResponseEntity<?> unexpected(Exception e) {
+        if (e instanceof org.springframework.web.ErrorResponse response)
+            return error(response.getStatusCode().value(), "Yêu cầu không hợp lệ.");
+        LoggerFactory.getLogger(ApiErrors.class).error("Unhandled API error", e);
+        return error(500, "Máy chủ gặp lỗi. Vui lòng thử lại sau.");
+    }
     private ResponseEntity<?> error(int status, String message) { return ResponseEntity.status(status).body(Map.of("message", message)); }
 }

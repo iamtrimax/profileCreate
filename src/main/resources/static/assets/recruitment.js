@@ -1,4 +1,5 @@
-import {api, $, node, action, form, busy, notice, money} from './common.js';
+import {locale} from './i18n.js';
+import {api, $, node, action, form, busy, notice, money, rawNode} from './common.js';
 import {markdown} from './markdown.js';
 import {formatJd} from './jd-formatter.js';
 const base='/me/recruitment';
@@ -44,7 +45,7 @@ async function parseJd() {
     updateJdMarkdown();
     const job=result.data,preview=$('recruitment-jd-preview');preview.replaceChildren(node('h4','Thông tin đã trích xuất'));
     const fields=node('dl',undefined,'recruitment-extracted');
-    for(const [label,value] of [['Vị trí',job.role],['Công ty',job.company],['Địa điểm',job.location],['Hình thức',modes[job.workMode]],['Kinh nghiệm tối thiểu',job.minExperience+' năm'],['Lương',salaryText(job)]])fields.append(node('dt',label),node('dd',value??'Chưa xác định'));
+    for(const [label,value] of [['Vị trí',job.role],['Công ty',job.company],['Địa điểm',job.location],['Hình thức',modes[job.workMode]],['Kinh nghiệm tối thiểu',job.minExperience+' năm'],['Lương',salaryText(job)]])fields.append(node('dt',label),(['Vị trí','Công ty','Địa điểm'].includes(label)&&value?rawNode:node)('dd',value??'Chưa xác định'));
     preview.append(fields,node('h5','Kỹ năng bắt buộc'),tags(job.requiredSkills),node('h5','Kỹ năng ưu tiên'),job.preferredSkills.length?tags(job.preferredSkills):node('p','Không được nêu trong JD.','muted'));
     preview.hidden=false;
     for(const warning of result.warnings??[])preview.append(node('p',warning,'muted'));
@@ -65,30 +66,30 @@ function updateJdMarkdown() {
   preview.replaceChildren(markdown(formatJd(value)));preview.hidden=!value.trim();
   if(value.trim())preview.closest('details').open=true;
 }
-function tags(skills) {const group=node('div',undefined,'recruitment-tags');skills.forEach(skill=>group.append(node('span',skill)));return group;}
+function tags(skills) {const group=node('div',undefined,'recruitment-tags');skills.forEach(skill=>group.append(rawNode('span',skill)));return group;}
 function jobCopy(job) {
   const row=node('article',undefined,'recruitment-job');
-  row.append(node('h4',job.title),node('strong',job.company),node('p',job.role+' · '+modes[job.workMode]+' · '+job.location,'muted'),node('p',salaryText(job),'recruitment-salary'),node('p','Kinh nghiệm từ '+job.minExperience+' năm'),node('small','Kỹ năng bắt buộc'),tags(job.requiredSkills));
+  row.append(rawNode('h4',job.title),rawNode('strong',job.company),node('p',job.role+' · '+modes[job.workMode]+' · '+job.location,'muted'),node('p',salaryText(job),'recruitment-salary'),node('p','Kinh nghiệm từ '+job.minExperience+' năm'),node('small','Kỹ năng bắt buộc'),tags(job.requiredSkills));
   const details=node('details',undefined,'recruitment-description');details.append(node('summary','Mô tả công việc'),markdown(formatJd(job.description??job.formattedDescription)));row.append(details);
   if(job.preferredSkills.length)row.append(node('small','Ưu tiên'),tags(job.preferredSkills));return row;
 }
 function candidateCopy(candidate,job,assessment) {
   const card=node('article',undefined,'recruitment-candidate');
   const header=node('div',undefined,'candidate-header'),identity=node('div',undefined,'candidate-identity');
-  const initials=candidate.displayName.trim().split(/\s+/).slice(-2).map(part=>Array.from(part)[0]).join('').toLocaleUpperCase('vi-VN');
+  const initials=candidate.displayName.trim().split(/\s+/).slice(-2).map(part=>Array.from(part)[0]).join('').toLocaleUpperCase(locale());
   const avatar=node('span',initials||'UV','candidate-avatar');avatar.setAttribute('aria-hidden','true');
-  const heading=node(job?'h4':'h5',candidate.displayName,'candidate-name');heading.tabIndex=-1;
-  identity.append(heading,node('p',candidate.desiredRole,'candidate-role'));
+  const heading=rawNode(job?'h4':'h5',candidate.displayName,'candidate-name');heading.tabIndex=-1;
+  identity.append(heading,rawNode('p',candidate.desiredRole,'candidate-role'));
   header.append(avatar,identity);if(job)header.append(node('span',assessment?assessment.score+'/100 · Phù hợp':'Hồ sơ ứng viên','pill candidate-badge'));card.append(header);
   const facts=node('dl',undefined,'candidate-facts');
   for(const [label,value] of [['Kinh nghiệm',candidate.experienceYears+' năm'],['Địa điểm',candidate.location],['Hình thức',modes[candidate.workMode]],['Lương mong muốn',salaryText(candidate)]]) {
-    const fact=node('div');fact.append(node('dt',label),node('dd',value));facts.append(fact);
+    const fact=node('div');fact.append(node('dt',label),(label==='Địa điểm'?rawNode:node)('dd',value));facts.append(fact);
   }
   const body=node('div',undefined,'candidate-body'),profile=node('section',undefined,'candidate-profile');
   profile.append(node(job?'h5':'h6','Giới thiệu kinh nghiệm'));
   const summary=candidate.summary?.trim()||'Ứng viên chưa thêm phần giới thiệu.';
-  if(summary.length>450){const details=node('details',undefined,'candidate-summary');details.append(node('summary','Đọc giới thiệu kinh nghiệm'),node('p',summary,'preserve'));profile.append(details);}
-  else profile.append(node('p',summary,'preserve'));
+  if(summary.length>450){const details=node('details',undefined,'candidate-summary');details.append(node('summary','Đọc giới thiệu kinh nghiệm'),rawNode('p',summary,'preserve'));profile.append(details);}
+  else profile.append((candidate.summary?.trim()?rawNode:node)('p',summary,'preserve'));
   profile.append(node(job?'h5':'h6','Kỹ năng'),tags(candidate.skills));
   if(job) {
     const required=new Set(job.requiredSkills.map(skill=>skill.trim().toLowerCase()));
@@ -167,7 +168,7 @@ async function loadMatches() {
   for(const match of matches) {
     const recruiter=match.job.ownerId===viewer.id,row=node('article',undefined,'recruitment-match');
     row.dataset.matchStatus=match.status;
-    row.append(node('span',statuses[match.status],'pill'),node('h4',match.job.title+' · '+match.job.company),node('p',recruiter?'Ứng viên: '+match.candidate.displayName:'Người tuyển dụng: '+match.job.recruiterName));
+    row.append(node('span',statuses[match.status],'pill'),rawNode('h4',match.job.title+' · '+match.job.company),node('p',recruiter?'Ứng viên: '+match.candidate.displayName:'Người tuyển dụng: '+match.job.recruiterName));
     if(recruiter)row.append(candidateCopy(match.candidate));
     else {const details=node('details');details.append(node('summary','Xem JD và mức lương'),jobCopy(match.job));row.append(details);}
     const buttons=node('div',undefined,'actions');
@@ -175,7 +176,7 @@ async function loadMatches() {
       buttons.append(action('Đồng ý match',async()=>{await api(base+'/matches/'+match.id,'PATCH',{status:'ACCEPTED'});await refreshRecruitment();notice('Đã match. Hai bên có thể liên hệ và đặt lịch.');},''),action('Từ chối',async()=>{await api(base+'/matches/'+match.id,'PATCH',{status:'DECLINED'});await refreshRecruitment();}));
     }
     if(match.status==='ACCEPTED') {
-      const email=node('a',match.contactEmail);email.href='mailto:'+match.contactEmail;row.append(email);
+      const email=rawNode('a',match.contactEmail);email.href='mailto:'+match.contactEmail;row.append(email);
       buttons.append(action('Trò chuyện & lịch phỏng vấn',()=>openConversation(match),''));
     }
     row.append(buttons);$('recruitment-matches').append(row);
@@ -187,7 +188,7 @@ async function openConversation(match) {
   const recruiter=match.job.ownerId===viewer.id,name=recruiter?match.candidate.displayName:match.job.recruiterName;
   $('recruitment-conversation-title').textContent=name;
   $('recruitment-conversation-context').textContent=match.job.title+' · '+match.job.company;
-  $('recruitment-chat-avatar').textContent=name.trim().split(/\s+/).slice(-2).map(part=>Array.from(part)[0]).join('').toLocaleUpperCase('vi-VN');
+  $('recruitment-chat-avatar').textContent=name.trim().split(/\s+/).slice(-2).map(part=>Array.from(part)[0]).join('').toLocaleUpperCase(locale());
   $('recruitment-chat-email').textContent=match.contactEmail??'';
   $('recruitment-chat-email').href=match.contactEmail?'mailto:'+match.contactEmail:'';
   $('recruitment-interview-form').hidden=!recruiter;
@@ -209,14 +210,14 @@ async function loadThread() {
     const previousScroll=list.scrollTop,appendOnly=messageSnapshot.length>0&&messages.length>=messageSnapshot.length&&JSON.stringify(messages.slice(0,messageSnapshot.length))===JSON.stringify(messageSnapshot);
     if(!appendOnly)list.replaceChildren();
     if(!messages.length)list.append(node('p','Bắt đầu trao đổi về công việc và lịch phỏng vấn.','muted'));
-    let lastDay=appendOnly?new Date(messageSnapshot.at(-1).createdAt).toLocaleDateString('vi-VN'):null;
+    let lastDay=appendOnly?new Date(messageSnapshot.at(-1).createdAt).toLocaleDateString(locale()):null;
     for(const message of messages.slice(appendOnly?messageSnapshot.length:0)) {
-      const date=new Date(message.createdAt),day=date.toLocaleDateString('vi-VN');
+      const date=new Date(message.createdAt),day=date.toLocaleDateString(locale());
       if(day!==lastDay){list.append(node('p',day,'chat-day'));lastDay=day;}
       const mine=message.senderId===viewer.id,row=node('article',undefined,'recruitment-message'+(mine?' mine':''));
-      const meta=node('div',undefined,'chat-message-meta'),time=node('time',date.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}));time.dateTime=message.createdAt;
-      meta.append(node('strong',mine?'Bạn':message.senderName),time);
-      row.append(meta,node('p',message.body,'preserve'));list.append(row);
+      const meta=node('div',undefined,'chat-message-meta'),time=node('time',date.toLocaleTimeString(locale(),{hour:'2-digit',minute:'2-digit'}));time.dateTime=message.createdAt;
+      meta.append(mine?node('strong','Bạn'):rawNode('strong',message.senderName),time);
+      row.append(meta,rawNode('p',message.body,'preserve'));list.append(row);
     }
     messageSnapshot=messages;messageLoaded=true;list.scrollTop=stick?list.scrollHeight:previousScroll;forceMessageScroll=false;
   }
@@ -225,10 +226,10 @@ async function loadThread() {
   if(!interviews.length)host.append(node('p','Chưa có lịch phỏng vấn.','chat-help muted'));
   for(const interview of interviews) {
     const row=node('article',undefined,'chat-interview'),start=new Date(interview.startsAt),end=new Date(interview.endsAt);
-    const time=node('time',start.toLocaleDateString('vi-VN')+' · '+start.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})+' – '+end.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}));time.dateTime=interview.startsAt;
+    const time=node('time',start.toLocaleDateString(locale())+' · '+start.toLocaleTimeString(locale(),{hour:'2-digit',minute:'2-digit'})+' – '+end.toLocaleTimeString(locale(),{hour:'2-digit',minute:'2-digit'}));time.dateTime=interview.startsAt;
     row.append(node('span',interviewStatuses[interview.status],'pill'),time);
-    if(interview.meetingDetails.length>120){const details=node('details');details.append(node('summary','Địa điểm / link cuộc họp'),node('p',interview.meetingDetails,'preserve'));row.append(details);}
-    else row.append(node('p',interview.meetingDetails,'preserve'));
+    if(interview.meetingDetails.length>120){const details=node('details');details.append(node('summary','Địa điểm / link cuộc họp'),rawNode('p',interview.meetingDetails,'preserve'));row.append(details);}
+    else row.append(rawNode('p',interview.meetingDetails,'preserve'));
     const buttons=node('div',undefined,'actions');const change=async status=>{await api(base+'/matches/'+match.id+'/interviews/'+interview.id,'PATCH',{status});await loadThread();};
     if(interview.status==='PENDING'&&match.candidate.ownerId===viewer.id)buttons.append(action('Xác nhận',()=>change('CONFIRMED'),''),action('Từ chối',()=>change('DECLINED')));
     if(['PENDING','CONFIRMED'].includes(interview.status))buttons.append(action('Hủy lịch',()=>change('CANCELLED'),'secondary'));

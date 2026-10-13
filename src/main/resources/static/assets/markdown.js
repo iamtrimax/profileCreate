@@ -1,5 +1,5 @@
 // Supported Markdown is rendered as DOM nodes, never as user-supplied HTML.
-import {node} from './common.js';
+import {rawNode as node} from './common.js';
 
 function safeLink(value) {
   if(/[\u0000-\u0020\\]/.test(value))return null;

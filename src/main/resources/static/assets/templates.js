@@ -1,4 +1,4 @@
-import {node, money} from './common.js';
+import {node, money, rawNode} from './common.js';
 import {renderSections} from './landing.js';
 import {initBlockReveal} from './block-reveal.js';
 
@@ -85,9 +85,9 @@ export function renderPreview(container, profile) {
   const layout = node('div', undefined, 'profile-layout');
   const hero = node('section', undefined, 'card profile-hero');
   const name = profile.displayName.trim() || 'Tên của bạn';
-  hero.append(node('div', Array.from(name)[0].toUpperCase(), 'avatar'), node('p', '@' + profile.username, 'eyebrow'), node('h3', name, 'profile-name'), node('p', profile.bio, 'preserve'));
+  hero.append(rawNode('div', Array.from(name)[0].toUpperCase(), 'avatar'), rawNode('p', '@' + profile.username, 'eyebrow'), (profile.displayName.trim()?rawNode:node)('h3', name, 'profile-name'), rawNode('p', profile.bio, 'preserve'));
   const socials = node('div', undefined, 'socials');
-  profile.links.forEach(link => socials.append(node('span', link.title + ' ↗', 'preview-link')));
+  profile.links.forEach(link => socials.append(rawNode('span', link.title + ' ↗', 'preview-link')));
   hero.append(socials);
   if (templates.find(item => item.id === profile.template)?.landing) hero.append(node('span', 'Trao đổi nhu cầu →', 'preview-cta'));
   const services = node('section', undefined, 'card profile-services');
@@ -96,7 +96,7 @@ export function renderPreview(container, profile) {
   if (!profile.services.length) services.append(node('p', 'Liên hệ để trao đổi về nhu cầu của bạn.', 'muted'));
   profile.services.forEach(service => {
     const row = node('div', undefined, 'list-item');
-    row.append(node('strong', service.title), node('p', service.description, 'preserve'), node('p', money(service.price), 'price'));
+    row.append(rawNode('strong', service.title), rawNode('p', service.description, 'preserve'), node('p', money(service.price), 'price'));
     serviceItems.append(row);
   });
   services.append(serviceItems);

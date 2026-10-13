@@ -1,7 +1,8 @@
+import {locale, getLanguage} from './i18n.js';
 import {initAudit,refreshAudit,clearAudit} from './audit.js';
 const $ = (id) => document.getElementById(id);
-const number = new Intl.NumberFormat("vi-VN", { maximumFractionDigits: 2 });
-const precise = new Intl.NumberFormat("vi-VN", {
+const number = new Intl.NumberFormat(locale(), { maximumFractionDigits: 2 });
+const precise = new Intl.NumberFormat(locale(), {
   maximumSignificantDigits: 10,
 });
 let token = "",
@@ -72,7 +73,7 @@ function disconnect(note = "") {
 }
 async function request(path, session, allowUnavailable = false, base = "/actuator/") {
   const response = await fetch(base + path, {
-    headers: { Authorization: "Bearer " + token },
+    headers: { Authorization: "Bearer " + token, "Accept-Language": getLanguage() },
     credentials: "omit",
     cache: "no-store",
     signal: AbortSignal.any([session.signal, AbortSignal.timeout(12000)]),
@@ -129,7 +130,7 @@ function chart(memory) {
   $("memory-dot").setAttribute("cy", last[1]);
   $("memory-dot").removeAttribute("hidden");
   $("chart-caption").textContent =
-    `${samples.length}/30 mẫu · ${samples[0].time.toLocaleTimeString("vi-VN")} – ${samples.at(-1).time.toLocaleTimeString("vi-VN")} · Thấp nhất ${number.format(min)} MiB / cao nhất ${number.format(max)} MiB. Chỉ lưu trong lần kết nối này.`;
+    `${samples.length}/30 mẫu · ${samples[0].time.toLocaleTimeString(locale())} – ${samples.at(-1).time.toLocaleTimeString(locale())} · Thấp nhất ${number.format(min)} MiB / cao nhất ${number.format(max)} MiB. Chỉ lưu trong lần kết nối này.`;
 }
 async function refresh() {
   if (!connection || refreshing) return;
@@ -214,7 +215,7 @@ async function refresh() {
     await refreshAudit();
     if (connection !== session) return;
     $("updated").textContent =
-      "Lấy mẫu lúc " + new Date().toLocaleTimeString("vi-VN");
+      "Lấy mẫu lúc " + new Date().toLocaleTimeString(locale());
     state(
       failed ? "Dữ liệu chưa đầy đủ" : "Đã kết nối",
       failed ? "stale" : "ok",

@@ -1,7 +1,7 @@
-import {api, node, action, form, notice} from './common.js';
+import {t, rawNode, locale, getLanguage, api, node, action, form, notice} from './common.js';
 
 const statusNames = {PENDING: 'Chờ xác nhận', CONFIRMED: 'Đã xác nhận', CANCELLED: 'Đã hủy', COMPLETED: 'Hoàn tất'};
-const timeLabel = (value, timezone) => new Intl.DateTimeFormat('vi-VN', {timeZone: timezone, year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',timeZoneName:'shortOffset'}).format(new Date(value));
+const timeLabel = (value, timezone) => new Intl.DateTimeFormat(locale(), {timeZone: timezone, year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',timeZoneName:'shortOffset'}).format(new Date(value));
 const minutes = value => { const [h,m] = value.split(':').map(Number); return h * 60 + m; };
 const clock = value => String(Math.floor(value / 60)).padStart(2,'0') + ':' + String(value % 60).padStart(2,'0');
 let dashboard;
@@ -60,11 +60,11 @@ async function loadBookings() {
   const bookings=await api('/me/bookings?page='+bookingPage),list=dashboard.querySelector('#bookings-list');list.replaceChildren();
   if(!bookings.length)list.append(node('p','Chưa có lịch hẹn trong trang này.','muted'));
   bookings.forEach(booking=>{
-    const row=node('article',undefined,'list-item');row.append(node('h3',booking.serviceTitle+' · '+statusNames[booking.status]),node('p',`${timeLabel(booking.startsAt,booking.timezone)} → ${timeLabel(booking.endsAt,booking.timezone)} (${booking.timezone})`),node('p',booking.name+' · '+booking.email),node('p',booking.message,'preserve'));
+    const row=node('article',undefined,'list-item');row.append(node('h3',booking.serviceTitle+' · '+statusNames[booking.status]),node('p',`${timeLabel(booking.startsAt,booking.timezone)} → ${timeLabel(booking.endsAt,booking.timezone)} (${booking.timezone})`),rawNode('p',booking.name+' · '+booking.email),rawNode('p',booking.message,'preserve'));
     const actions=node('div',undefined,'actions');
     for(const state of booking.status==='PENDING'?['CONFIRMED','CANCELLED']:booking.status==='CONFIRMED'?['CANCELLED',...(new Date(booking.endsAt)<=new Date()?['COMPLETED']:[])]:[]) {
       actions.append(action({CONFIRMED:'Xác nhận',CANCELLED:'Hủy lịch',COMPLETED:'Hoàn tất'}[state],async()=>{
-        if(state==='CANCELLED'&&!confirm('Hủy lịch hẹn này?'))return;
+        if(state==='CANCELLED'&&!confirm(t('Hủy lịch hẹn này?')))return;
         await api('/me/bookings/'+booking.id,'PATCH',{status:state});await loadBookings();window.dispatchEvent(new Event('linkhub:booking-changed'));
       }));
     }

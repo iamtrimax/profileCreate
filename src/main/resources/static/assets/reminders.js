@@ -1,4 +1,5 @@
-import {api, node, action} from './common.js';
+import {locale} from './i18n.js';
+import {api, node, action, rawNode} from './common.js';
 
 let panel, timer, active=false, version=0;
 function openBookings() {
@@ -38,8 +39,8 @@ export async function refreshReminders() {
       const remaining=new Date(item.startsAt).getTime()-now;
       const countdown=remaining<=0?'Đang diễn ra':remaining<60000?'Bắt đầu trong dưới 1 phút':remaining<3600000?`Còn ${Math.ceil(remaining/60000)} phút`:`Còn ${Math.floor(remaining/3600000)} giờ ${Math.floor(remaining%3600000/60000)} phút`;
       const card=node('article',undefined,'upcoming-item');
-      const format=new Intl.DateTimeFormat('vi-VN',{timeZone:item.timezone,day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZoneName:'shortOffset'});
-      card.append(node('strong',countdown,'upcoming-countdown'),node('h3',item.serviceTitle),node('p','Khách: '+item.name),node('p',`${format.format(new Date(item.startsAt))} → ${format.format(new Date(item.endsAt))}`),node('small',item.timezone));
+      const format=new Intl.DateTimeFormat(locale(),{timeZone:item.timezone,day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZoneName:'shortOffset'});
+      card.append(node('strong',countdown,'upcoming-countdown'),rawNode('h3',item.serviceTitle),node('p','Khách: '+item.name),node('p',`${format.format(new Date(item.startsAt))} → ${format.format(new Date(item.endsAt))}`),node('small',item.timezone));
       grid.append(card);
     }
     if(data.total>data.items.length)grid.append(node('p',`Và ${data.total-data.items.length} lịch khác — mở Quản lý lịch hẹn để xem.`,'muted'));

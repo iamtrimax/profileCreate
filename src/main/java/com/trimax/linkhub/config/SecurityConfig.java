@@ -25,7 +25,7 @@ public class SecurityConfig {
         provider.setPasswordEncoder(encoder);
         return new ProviderManager(provider);
     }
-    @Bean SecurityFilterChain security(HttpSecurity http, SecurityContextRepository repository, com.trimax.linkhub.service.AccountSecurityService accounts,OperationsAccess operations,com.trimax.linkhub.service.AuditService audit) throws Exception {
+    @Bean SecurityFilterChain security(HttpSecurity http, SecurityContextRepository repository, com.trimax.linkhub.service.AccountSecurityService accounts,OperationsAccess operations,com.trimax.linkhub.service.AuditService audit, com.trimax.linkhub.api.ApiMessages messages) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/ops/**").access((authentication,context)->new org.springframework.security.authorization.AuthorizationDecision(operations.allowed(context.getRequest())))
@@ -41,8 +41,8 @@ public class SecurityConfig {
                 .addFilterBefore(new AccountSessionFilter(accounts),org.springframework.security.web.access.intercept.AuthorizationFilter.class)
                 .requestCache(cache -> cache.disable())
                 .exceptionHandling(errors -> errors
-                        .authenticationEntryPoint((req, res, ex) -> { res.setStatus(401); res.setContentType("application/json"); res.getWriter().write("{\"message\":\"Authentication required\"}"); })
-                        .accessDeniedHandler((req, res, ex) -> { res.setStatus(403); res.setContentType("application/json"); res.getWriter().write("{\"message\":\"Access denied or invalid CSRF token\"}"); }))
+                        .authenticationEntryPoint((req, res, ex) -> messages.writeSecurityError(req, res, 401, "Cần đăng nhập để tiếp tục.", "AUTHENTICATION_REQUIRED"))
+                        .accessDeniedHandler((req, res, ex) -> messages.writeSecurityError(req, res, 403, "Không có quyền truy cập hoặc mã CSRF không hợp lệ.", "ACCESS_DENIED")))
                 .headers(headers -> headers.contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")))
                 .logout(logout -> logout.logoutUrl("/api/auth/logout").logoutSuccessHandler((req, res, auth) -> res.setStatus(204)).deleteCookies("SESSION", "JSESSIONID"))
                 .build();
