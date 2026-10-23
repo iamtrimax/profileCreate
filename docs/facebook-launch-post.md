@@ -1,6 +1,6 @@
 # Bài giới thiệu LinkHub VN trên Facebook
 
-> Ghi chú trước khi đăng (23/10/2026): website truy cập được nhưng ba tài khoản bên dưới đang trả HTTP 401 khi đăng nhập. Cần nạp/xác nhận tài khoản demo trên database của website public và kiểm tra lại trước khi đăng bài. Chưa đăng lên nhóm Facebook.
+> Đã kiểm tra ngày 23/10/2026: website public và cả ba tài khoản demo bên dưới hoạt động, đăng nhập thành công sau khi cập nhật EC2. Nội dung bài đã sẵn sàng; chưa đăng lên nhóm Facebook.
 
 ---
 
