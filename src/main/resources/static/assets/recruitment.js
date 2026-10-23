@@ -102,7 +102,7 @@ async function loadJobs() {
   $('recruitment-job-count').textContent=jobs.length+' bài đăng';
   if(!jobs.length)$('recruitment-jobs').append(node('p','Chưa có bài tuyển dụng. Điền JD để bắt đầu khám phá ứng viên.','muted'));
   for(const job of jobs) {
-    const row=jobCopy(job),buttons=node('div',undefined,'actions'),suggestionHost=node('div');
+    const row=jobCopy(job),buttons=node('div',undefined,'actions'),suggestionHost=node('div',undefined,'suggestion-host');
     row.prepend(node('span',job.open?'Đang tuyển':'Đã đóng','pill'));
     buttons.append(action('Sửa JD',async()=>{switchView('hiring');invalidateJd();fill($('recruitment-job-form'),job);$('job-form-title').textContent='Sửa bài tuyển dụng';$('recruitment-jd-save').textContent='Lưu thay đổi';$('recruitment-job-form').scrollIntoView({block:'center'});$('recruitment-jd').focus({preventScroll:true});await parseJd();}),action(job.open?'Đóng bài':'Mở lại',async()=>{await api(base+'/jobs/'+job.id,'PATCH',{open:!job.open});await Promise.all([loadJobs(),loadFeed(),refreshRecruitment()]);}));
     if(job.open)buttons.append(action('Match · Tìm ứng viên',()=>discover(job,suggestionHost),''));
@@ -112,6 +112,7 @@ async function loadJobs() {
 async function discover(job,host,previous) {
   if(host.dataset.loading==='true')return;
   host.dataset.loading='true';
+  const mJob=host.closest('.recruitment-job');if(mJob){const grid=mJob.closest('#recruitment-jobs');if(grid)[...grid.querySelectorAll(':scope>.recruitment-job')].forEach(j=>{if(j===mJob){j.classList.add('is-matching');j.classList.remove('is-dimmed');}else{j.classList.add('is-dimmed');j.classList.remove('is-matching');const sh=j.querySelector('.suggestion-host');if(sh)sh.replaceChildren();}});mJob.scrollIntoView({block:'nearest',behavior:'smooth'});}
   const previousButtons=[...host.querySelectorAll('button')];previousButtons.forEach(button=>button.disabled=true);
   let status=host.querySelector('.candidate-status');
   if(!status){status=node('p',undefined,'candidate-status');status.setAttribute('role','status');host.prepend(status);}

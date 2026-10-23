@@ -43,13 +43,77 @@ public class RecruitmentSeedService {
         javaPerson("remote","Nguyễn Thảo",4,"Đà Nẵng","REMOTE",20000000,30000000,true,JAVA,"Phù hợp JD Remote, không phù hợp JD Hybrid."),
         new Person("designer","Trần Phúc","UX/UI Designer","Hồ Chí Minh","HYBRID",3,18000000,25000000,true,List.of("figma","ui design","ux research"),"Thiết kế sản phẩm số. Khác vị trí tuyển Java, phù hợp JD thiết kế.")
     );
+    private record Track(String key, String role, String company, List<String> required, List<String> preferred) {}
+    private static final List<Track> TRACKS = List.of(
+        new Track("frontend", "React Developer", "Lotus Digital", List.of("react", "typescript"), List.of("nextjs", "tailwind")),
+        new Track("node", "Node.js Developer", "Mekong Software", List.of("nodejs", "express"), List.of("mongodb", "redis")),
+        new Track("python", "Python Developer", "Cloud Nine", List.of("python", "django"), List.of("celery", "fastapi")),
+        new Track("mobile", "Mobile Developer", "Saigon Mobile", List.of("react native", "expo"), List.of("firebase", "flutter")),
+        new Track("qa", "QA Engineer", "Quality Labs", List.of("testing", "selenium"), List.of("playwright", "postman")),
+        new Track("devops", "DevOps Engineer", "Sky Infrastructure", List.of("kubernetes", "terraform"), List.of("aws", "docker")),
+        new Track("data", "Data Analyst", "Insight Vietnam", List.of("sql", "power bi"), List.of("excel", "tableau")),
+        new Track("ba", "Business Analyst", "Bridge Solutions", List.of("business analysis", "bpmn"), List.of("jira", "uml")),
+        new Track("product", "Product Manager", "Nova Product", List.of("product management", "roadmap"), List.of("analytics", "scrum")),
+        new Track("security", "Security Engineer", "Secure Vietnam", List.of("security", "owasp"), List.of("pentesting", "linux"))
+    );
+    private static final List<String> LOCATIONS = List.of("Hồ Chí Minh", "Hà Nội", "Đà Nẵng");
+    private static final List<String> MODES = List.of("HYBRID", "ONSITE", "REMOTE", "ANY");
+    private static final List<String> NAMES = List.of("Nguyễn Hoàng Anh", "Trần Ngọc Bình", "Lê Minh Châu", "Phạm Hải Đăng",
+        "Hoàng Thu Giang", "Vũ Quốc Hưng", "Đặng Bảo Khánh", "Bùi Thảo Linh", "Đỗ Nhật Minh", "Hồ Phương Nhi", "Ngô Thanh Phong", "Dương Minh Tú");
+    private static List<Person> people() {
+        List<Person> result = new ArrayList<>(PEOPLE);
+        for (Track track : TRACKS) {
+            for (int index = 0; index < 12; index++) {
+                int years = index % 7;
+                long min = 12000000L + years * 4000000L;
+                List<String> skills = new ArrayList<>(track.required());
+                if (index % 3 != 0) skills.addAll(track.preferred());
+                String level = years < 2 ? "Junior" : years < 5 ? "Middle" : "Senior";
+                result.add(new Person(track.key() + "_" + String.format(Locale.ROOT, "%02d", index + 1),
+                    NAMES.get(index), track.role(), LOCATIONS.get(index % 3), MODES.get(index % 4),
+                    years, min, min + 10000000L, index != 11, List.copyOf(skills),
+                    level + " " + track.role() + " · " + years + " năm kinh nghiệm. Có kinh nghiệm "
+                        + String.join(", ", skills) + ". Mong muốn tham gia phát triển sản phẩm tại " + track.company() + "."));
+            }
+        }
+        return List.copyOf(result);
+    }
+    private static final int JOBS_PER_TRACK = 24;
+    private static final List<String> PROJECTS = List.of(
+        "Thương mại điện tử", "Tài chính số", "Logistics", "Y tế số", "Giáo dục trực tuyến");
+    private void expandedJobs() {
+        for (Track track : TRACKS) {
+            for (int index = 0; index < JOBS_PER_TRACK; index++) {
+                int variant = index % 4;
+                String project = index < 4 ? "Sản phẩm số" : PROJECTS.get((index - 4) / 4);
+                String mode = variant == 3 ? "REMOTE" : variant == 1 ? "ONSITE" : "HYBRID";
+                String location = variant == 3 ? "Toàn quốc" : LOCATIONS.get(variant);
+                int years = variant == 0 ? 0 : variant == 3 ? 5 : 2;
+                long min = (variant == 0 ? 12000000L : variant == 3 ? 30000000L : 20000000L) + (index / 4) * 1000000L;
+                String level = variant == 0 ? "Junior" : variant == 3 ? "Senior" : "Middle";
+                job(track.key() + "-" + (index + 1), "recruiter_" + track.key(),
+                    level + " " + track.role() + " · " + location + (index < 4 ? "" : " · " + project), track.company(), track.role(), mode, location,
+                    years, min, min + 18000000L, true, track.required(), track.preferred(),
+                    "Về công ty: " + track.company() + " phát triển sản phẩm số cho khách hàng trong và ngoài nước.\n\n"
+                    + "Công việc: Tham gia dự án " + project + " ở vị trí " + track.role() + ", phối hợp cùng nhóm sản phẩm, rà soát chất lượng và cải tiến quy trình.\n\n"
+                    + "Yêu cầu: Từ " + years + " năm kinh nghiệm; nắm vững " + String.join(", ", track.required())
+                    + ". Ưu tiên " + String.join(", ", track.preferred()) + ".\n\n"
+                    + "Quyền lợi: Lương " + min / 1000000 + "–" + (min + 18000000L) / 1000000
+                    + " triệu đồng/tháng, bảo hiểm, ngân sách đào tạo, đánh giá định kỳ. Hình thức " + mode + " tại " + location + ".");
+            }
+        }
+    }
     @Transactional public Result seed() {
         // Serialize seed invocations and commit all fixtures together.
         jdbc.queryForObject("select \"installed_rank\" from \"flyway_schema_history\" order by \"installed_rank\" desc limit 1 for update",Integer.class);
         String hash=encoder.encode(PASSWORD);int created=0;
         created+=account("tech","demo_recruiter","LinkHub Tech · Nhà tuyển dụng",hash);
         created+=account("creative","demo_creative","Studio Creative · Nhà tuyển dụng",hash);
-        for(Person person:PEOPLE) {
+        for (Track track : TRACKS) {
+            created += account("recruiter_" + track.key(), "demo_recruiter_" + track.key(), track.company() + " · Nhà tuyển dụng", hash);
+        }
+        List<Person> allPeople = people();
+        for(Person person:allPeople) {
             created+=account(person.key(),"demo_"+person.key(),person.name(),hash);
             UUID owner=id("account:"+person.key());
             if(jdbc.queryForObject("select count(*) from candidate_profiles where owner_id=?",Long.class,owner)==0) {
@@ -63,6 +127,7 @@ public class RecruitmentSeedService {
         job("designer","creative","UX/UI Designer · Studio Creative","Studio Creative","UX/UI Designer","HYBRID","Hồ Chí Minh",2,18000000,28000000,true,List.of("figma","ui design"),List.of("ux research"),"Thiết kế giao diện và trải nghiệm người dùng. JD để kiểm tra nhóm ứng viên khác với Java.");
         job("closed","tech","Java Developer · Bài đã đóng","LinkHub Tech","Java Developer","HYBRID","Hồ Chí Minh",2,25000000,35000000,false,List.of("java","spring boot"),List.of(),"Bài đã đóng: không xuất hiện trên feed, không tìm match mới. Có thể mở lại từ dashboard.");
         job("empty","tech","COBOL Developer · Không có ứng viên","LinkHub Tech","COBOL Developer","REMOTE","Toàn quốc",5,30000000,40000000,true,List.of("cobol"),List.of(),"Không có hồ sơ COBOL trong bộ seed. Dùng để kiểm tra trạng thái hết ứng viên phù hợp.");
+        expandedJobs();
         match("pending","java-pipeline","bao","PENDING");
         match("accepted","java-pipeline","an","ACCEPTED");
         match("declined","java-pipeline","chi","DECLINED");
@@ -75,7 +140,7 @@ public class RecruitmentSeedService {
         notifications.record(id("account:bao"),"demo:recruitment:pending:v1","RECRUITMENT_INVITE","Bạn có lời mời tuyển dụng","LinkHub Tech mời bạn trao đổi về vị trí Java Developer. Mở Tuyển dụng để xem JD và phản hồi.","recruitment",List.of());
         notifications.record(id("account:tech"),"demo:recruitment:accepted:v1","RECRUITMENT_REPLY","Bạn có match tuyển dụng mới","Phạm An đã đồng ý lời mời. Bạn có thể mở trò chuyện và lịch phỏng vấn.","recruitment",List.of());
         notifications.record(id("account:an"),"demo:recruitment:interview:v1","RECRUITMENT_INTERVIEW","Bạn có đề xuất lịch phỏng vấn","Mở match với LinkHub Tech để xác nhận hoặc từ chối lịch đang chờ.","recruitment",List.of());
-        return new Result(created,PEOPLE.size()+2,6);
+        return new Result(created,allPeople.size()+2+TRACKS.size(),6+TRACKS.size()*JOBS_PER_TRACK);
     }
     private int account(String key,String username,String name,String hash) {
         UUID owner=id("account:"+key);String email=username+"@linkhub.test";

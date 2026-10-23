@@ -1,140 +1,1042 @@
-﻿/* Recruitment uses the workspace's semantic tokens in both color modes. */
-#recruitment-panel{min-width:0}
-#recruitment-panel [hidden]{display:none!important}
-#recruitment-panel .card{margin-bottom:24px;min-width:0}
-#recruitment-panel h3{margin-top:0;font-size:22px;letter-spacing:-.4px}
-#recruitment-panel h4{margin:12px 0 8px;font-size:19px;line-height:1.4}
-#recruitment-panel h5{font-size:14px;margin:20px 0 8px}
-.recruitment-intro{border-top:3px solid var(--accent);padding:28px!important}
-.recruitment-intro h2{font-size:clamp(24px,3vw,34px);line-height:1.2;letter-spacing:-.8px;max-width:620px;text-wrap:balance}
-.recruitment-intro>p:not(.eyebrow){max-width:680px;color:var(--muted);line-height:1.7}
-.recruitment-tabs,.recruitment-filters{display:flex;flex-wrap:wrap;gap:8px}
-.recruitment-tabs{margin:0 0 24px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
-#recruitment-panel .recruitment-tabs button,#recruitment-panel .recruitment-filters button{background:transparent;color:var(--muted);min-height:44px}
-#recruitment-panel :is(.recruitment-tabs,.recruitment-filters) button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
-#recruitment-match-count{display:inline-block;min-width:22px;padding:2px 6px;border-radius:6px;background:var(--surface);color:var(--ink);margin-left:6px;font-variant-numeric:tabular-nums}
-.recruitment-filters{margin:20px 0}
-.recruitment-grid{display:grid;grid-template-columns:minmax(0,1fr)}
-.recruitment-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-#recruitment-panel form{max-width:820px}
-#recruitment-panel label{line-height:1.5}
-#recruitment-panel :is(input,select,textarea){font-size:16px;min-height:44px;max-width:100%}
-#recruitment-panel .check{padding:16px;background:var(--canvas);border:1px solid var(--line);border-radius:10px;gap:12px}
-#recruitment-panel .check input{min-height:initial}
-#recruitment-panel :is(button,summary){cursor:pointer;touch-action:manipulation}
-#recruitment-panel :is(button,a,input,textarea,select,summary):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-#recruitment-panel .actions{flex-wrap:wrap;gap:10px;margin-top:20px}
-#recruitment-panel .preserve{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}
-#recruitment-feed,#recruitment-matches,#recruitment-jobs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.recruitment-job,.recruitment-match{padding:24px;border:1px solid var(--line);border-radius:12px;overflow-wrap:anywhere;min-width:0;background:var(--surface)}
-#recruitment-jobs{grid-template-columns:minmax(0,1fr)}
-.recruitment-salary{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
-.recruitment-suggestion{margin-top:20px;padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--canvas)}
-.recruitment-suggestion h4{margin-top:0}
-.recruitment-candidate{margin-top:20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden;min-width:0}
-.candidate-header{display:flex;align-items:center;gap:16px;padding:24px}
-.candidate-avatar{display:grid;place-items:center;flex:0 0 56px;width:56px;height:56px;border-radius:16px;background:var(--accent-soft);color:var(--accent);font-size:22px;font-weight:700}
-.candidate-identity{flex:1;min-width:0}
-#recruitment-panel .candidate-name{margin:0;font-size:24px;line-height:1.3;letter-spacing:-.5px;overflow-wrap:anywhere}
-.candidate-role{margin:6px 0 0;color:var(--muted);font-size:16px}
-.candidate-badge{flex-shrink:0;font-size:12px;white-space:normal}
-.candidate-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:20px 24px;margin:0;border-block:1px solid var(--line);background:var(--canvas)}
-.candidate-facts>div{min-width:0}
-.candidate-facts dt{font-size:13px;color:var(--muted);margin-bottom:6px}
-.candidate-facts dd{margin:0;font-size:16px;font-weight:600;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
-.candidate-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;padding:24px;align-items:start}
-.candidate-profile,.candidate-fit{min-width:0}
-#recruitment-panel .candidate-body :is(h5,h6){font-size:14px;margin:0 0 12px;line-height:1.5;letter-spacing:0}
-.candidate-profile>.preserve{margin:0 0 24px;font-size:15px}
-.candidate-summary{margin-bottom:24px}
-.candidate-fit{padding:20px;background:var(--canvas);border:1px solid var(--line);border-radius:12px}
-.candidate-fit>p{font-size:13px;margin:0 0 16px}
-.candidate-reasons{list-style:none;padding:0;margin:0;display:grid;gap:14px}
-.candidate-reasons li{position:relative;padding-left:22px;font-size:14px;line-height:1.65;overflow-wrap:anywhere}
-.candidate-reasons li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700}
-.candidate-skill-required{border:1px solid var(--accent)}
-.candidate-skill-required small{font-size:inherit;color:inherit}
-.candidate-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:none;margin:0;padding:20px 24px;border-top:1px solid var(--line);text-align:left}
-.candidate-privacy{flex:1 1 200px;max-width:360px;font-size:13px;line-height:1.6;color:var(--muted);margin:0}
-#recruitment-panel .candidate-footer .actions{margin:0}
-.candidate-footer button{min-height:44px}
-.candidate-status{margin:20px 0 0;color:var(--muted);font-size:14px;line-height:1.6}
-.candidate-empty{margin-top:16px;padding:28px;border:1px dashed var(--line);border-radius:14px;background:var(--canvas)}
-.candidate-empty button{margin:8px 8px 0 0;min-height:44px}
-.recruitment-match .candidate-body{grid-template-columns:minmax(0,1fr)}
-.recruitment-match .candidate-header{padding:16px}
-#recruitment-panel .recruitment-match .candidate-name{font-size:20px}
-@media(max-width:1000px){.candidate-body{grid-template-columns:minmax(0,1fr)}.candidate-header{flex-wrap:wrap}.candidate-badge{margin-left:72px}}
-@media(max-width:600px){.candidate-header,.candidate-body,.candidate-footer{padding:16px}.candidate-facts{padding:16px;gap:16px}.candidate-badge{margin-left:0}.candidate-footer .actions{width:100%}.candidate-footer button{width:100%}.candidate-fit{padding:16px}.candidate-empty{padding:20px}#recruitment-panel .candidate-name{font-size:22px}}
-.recruitment-tags{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.recruitment-tags span{padding:6px 10px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:13px;max-width:100%;overflow-wrap:anywhere}
-.recruitment-reasons{padding-left:20px;line-height:1.8;color:var(--muted)}
-.recruitment-extracted{display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,2fr);gap:12px;margin:20px 0}
-.recruitment-extracted dt{color:var(--muted)}
-.recruitment-extracted dd{margin:0;overflow-wrap:anywhere;font-weight:600}
-.recruitment-jd-warning{padding:16px;border-left:3px solid var(--danger-ink);background:var(--danger-bg);color:var(--danger-ink);border-radius:8px;line-height:1.7}
-.recruitment-markdown-preview{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:0 16px;background:var(--canvas)}
-.jd-markdown{font-size:15px;line-height:1.75;overflow-wrap:anywhere;color:var(--ink)}
-.jd-markdown p{white-space:pre-line;margin:12px 0}
-#recruitment-panel .jd-markdown :is(h5,h6){margin:24px 0 12px;line-height:1.4;font-weight:700}
-#recruitment-panel .jd-markdown h5{font-size:20px}
-#recruitment-panel .jd-markdown h6{font-size:17px}
-#recruitment-panel .recruitment-markdown-preview .jd-markdown{padding:8px 4px 20px}
-#recruitment-panel .jd-markdown>h5:first-child{margin-top:8px;font-size:24px}
-#recruitment-panel .jd-markdown h6{padding-bottom:10px;border-bottom:1px solid var(--line)}
-.jd-markdown :is(ul,ol){padding-left:24px;margin:12px 0}
-.jd-markdown li{margin:6px 0}
-.jd-markdown blockquote{margin:16px 0;padding:8px 16px;border-left:3px solid var(--accent);background:var(--canvas);color:var(--muted)}
-.jd-markdown code{font-family:Consolas,monospace;font-size:.9em;background:var(--canvas);padding:2px 5px;border:1px solid var(--line);border-radius:4px}
-.jd-markdown pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:var(--canvas);border:1px solid var(--line);border-radius:8px}
-.jd-markdown pre code{padding:0;border:0;background:transparent}
-.jd-markdown a{text-decoration:underline;text-underline-offset:3px}
-.jd-markdown hr{border:0;border-top:1px solid var(--line);margin:20px 0}
-#recruitment-panel summary{padding:12px 0;min-height:44px;font-weight:600;color:var(--accent)}
-.recruitment-empty{grid-column:1/-1;padding:32px;text-align:center;background:var(--canvas);border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
-#recruitment-conversation{scroll-margin-top:24px;padding:0;overflow:hidden;border:1px solid var(--line)}
-.chat-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line)}
-.chat-identity{display:flex;align-items:center;gap:12px;min-width:0}
-.chat-identity>div{min-width:0}
-.chat-avatar{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;background:var(--accent-soft);color:var(--accent);border-radius:12px;font-weight:700}
-#recruitment-panel .chat-header h3{font-size:18px;line-height:1.4;margin:0;overflow-wrap:anywhere}
-.chat-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin:0 0 3px}
-#recruitment-conversation-context{font-size:13px;line-height:1.5;margin:3px 0 0;overflow-wrap:anywhere}
-.chat-header button{flex-shrink:0;min-height:44px}
-.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,300px)}
-.chat-main{min-width:0;display:flex;flex-direction:column}
-#recruitment-messages{height:clamp(280px,48dvh,460px);overflow:auto;padding:16px 20px;background:var(--canvas);scrollbar-gutter:stable}
-.chat-day{text-align:center;font-size:12px;color:var(--muted);margin:12px 0 16px}
-.recruitment-message{width:fit-content;max-width:85%;background:var(--surface);border:1px solid var(--line);border-radius:12px 12px 12px 4px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere}
-.recruitment-message.mine{margin-left:auto;background:var(--accent-soft);border-radius:12px 12px 4px 12px}
-.chat-message-meta{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted)}
-.chat-message-meta strong{font-weight:600;color:var(--ink)}
-.chat-message-meta time{font-variant-numeric:tabular-nums}
-#recruitment-panel .recruitment-message p{margin:5px 0 0;font-size:14px;line-height:1.6}
-#recruitment-panel .chat-composer{max-width:none;padding:12px 16px;border-top:1px solid var(--line);margin:0}
-.chat-composer>label{font-size:12px;color:var(--muted);margin:0 0 4px}
-.chat-compose-row{display:flex;align-items:flex-end;gap:10px}
-#recruitment-panel .chat-compose-row textarea{margin:0;min-height:64px;max-height:140px;padding:10px 12px;flex:1}
-.chat-compose-row button{min-height:44px;min-width:64px;margin:0}
-.chat-sidebar{min-width:0;padding:12px 16px;border-left:1px solid var(--line);max-height:600px;overflow:auto;background:var(--surface)}
-.chat-sidebar a{display:block;font-size:14px;overflow-wrap:anywhere;margin:0 0 12px}
-.chat-contact{border-bottom:1px solid var(--line)}
-#recruitment-panel .chat-sidebar summary{font-size:14px;min-height:44px;line-height:1.5;padding:12px 0}
-#recruitment-interview-count{font-size:11px;margin-left:6px;padding:2px 6px}
-.chat-interview{padding:12px 0;border-bottom:1px solid var(--line)}
-#recruitment-panel .chat-interview p{font-size:13px;line-height:1.6;margin:6px 0}
-.chat-interview time{font-size:13px;font-weight:600;line-height:1.6}
-.chat-interview .pill{font-size:11px;padding:3px 7px;margin-bottom:6px}
-#recruitment-panel .chat-interview .actions{margin:10px 0 0;gap:6px}
-.chat-interview button{min-height:44px;padding:8px 10px;font-size:13px}
-.chat-interview-compose{margin-top:8px}
-#recruitment-panel .chat-interview-compose label{font-size:13px;margin:0 0 12px}
-#recruitment-panel .chat-interview-compose input,#recruitment-panel .chat-interview-compose textarea{padding:8px 10px;margin-top:5px}
-#recruitment-panel .chat-interview-compose form>button{margin:0;width:100%;min-height:44px}
-.chat-help{font-size:12px;line-height:1.6;margin:10px 0}
-@media(max-width:960px){.chat-layout{grid-template-columns:minmax(0,1fr)}.chat-sidebar{border-left:0;border-top:1px solid var(--line);max-height:none}.chat-header{padding:14px 16px}.chat-identity{align-items:flex-start}.chat-header{flex-wrap:wrap}#recruitment-messages{height:clamp(240px,42dvh,380px);padding:12px 16px}.chat-header button{margin-left:auto}.recruitment-message{max-width:92%}}
-@media(max-width:1100px){#recruitment-feed,#recruitment-matches{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:600px){.recruitment-fields{grid-template-columns:minmax(0,1fr);gap:0}.recruitment-tabs button{flex:1 1 40%;font-size:14px}.recruitment-intro{padding:20px!important}.recruitment-job,.recruitment-match,.recruitment-suggestion{padding:16px}#recruitment-panel .actions button{flex:1 1 auto}}
-@media(prefers-reduced-motion:reduce){#recruitment-panel *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+/* Modern Jobsite & Recruitment Platform Styles & Layouts */
+#recruitment-panel { min-width: 0; }
+#recruitment-panel [hidden] { display: none !important; }
+#recruitment-panel .card { margin-bottom: 24px; min-width: 0; }
+#recruitment-panel h3 { margin-top: 0; font-size: 22px; letter-spacing: -0.025em; font-weight: 750; }
+#recruitment-panel h4 { margin: 6px 0 4px; font-size: 19px; line-height: 1.35; font-weight: 750; letter-spacing: -0.02em; }
+#recruitment-panel h5 { font-size: 13px; font-weight: 700; margin: 18px 0 8px; color: var(--ink); text-transform: uppercase; letter-spacing: 0.05em; }
 
-.candidate-score{font-weight:700;font-size:1.15rem}.candidate-fit meter{width:100%;height:1rem;margin-bottom:.75rem}.candidate-gaps{padding-left:1.25rem;color:var(--muted)}
+/* =========================================================
+   1. Hero Banner: Recruitment Command Center
+   ========================================================= */
+.recruitment-intro {
+  position: relative;
+  overflow: hidden;
+  border-top: 4px solid var(--accent) !important;
+  background: linear-gradient(135deg, rgba(3, 105, 161, 0.05) 0%, rgba(14, 165, 233, 0.02) 100%) !important;
+  padding: 32px 36px !important;
+  border-radius: var(--radius-lg) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.recruitment-intro h2 {
+  font-size: clamp(24px, 3.2vw, 32px);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  max-width: 700px;
+  text-wrap: balance;
+  margin: 0;
+}
+.recruitment-intro > p:not(.eyebrow) {
+  max-width: 720px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 15.5px;
+  margin: 0 0 10px;
+}
+.recruitment-intro #recruitment-refresh {
+  align-self: flex-start;
+}
+
+/* =========================================================
+   2. Sticky Segmented Navigation Tabs
+   ========================================================= */
+.recruitment-tabs {
+  position: sticky;
+  top: 68px;
+  z-index: 25;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  background: rgba(248, 250, 252, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  margin: 0 0 28px;
+  box-shadow: var(--shadow-xs);
+}
+:where(:root[data-color-mode="dark"]) .recruitment-tabs {
+  background: rgba(17, 24, 39, 0.95);
+}
+
+#recruitment-panel .recruitment-tabs button,
+#recruitment-panel .recruitment-filters button {
+  background: transparent;
+  color: var(--muted);
+  min-height: 42px;
+  padding: 8px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: none;
+  transition: all .16s ease;
+}
+#recruitment-panel .recruitment-tabs button:hover,
+#recruitment-panel .recruitment-filters button:hover {
+  color: var(--ink);
+  background: rgba(15, 23, 42, 0.04);
+}
+#recruitment-panel :is(.recruitment-tabs, .recruitment-filters) button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--accent);
+  border-color: var(--line);
+  box-shadow: var(--shadow-sm);
+  font-weight: 750;
+}
+
+#recruitment-match-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--accent-soft-border);
+}
+
+.recruitment-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 20px 0 24px;
+}
+
+.recruitment-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+.recruitment-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+#recruitment-panel form { max-width: 860px; }
+#recruitment-panel label { line-height: 1.5; font-size: 13.5px; font-weight: 600; }
+#recruitment-panel :is(input, select, textarea) {
+  font-size: 15px;
+  min-height: 44px;
+  max-width: 100%;
+}
+
+/* Seeking Opportunity Switch Card */
+#recruitment-panel .check {
+  padding: 16px 22px;
+  background: linear-gradient(135deg, rgba(3, 105, 161, 0.04) 0%, rgba(14, 165, 233, 0.02) 100%);
+  border: 1px solid var(--accent-soft-border);
+  border-radius: var(--radius-md);
+  gap: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 12px 0 20px;
+}
+#recruitment-panel .check input { min-height: initial; width: 20px; height: 20px; }
+#recruitment-panel :is(button, summary) { cursor: pointer; touch-action: manipulation; }
+#recruitment-panel :is(button, a, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--accent-ring);
+}
+#recruitment-panel .actions { flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+#recruitment-panel .preserve { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; }
+
+/* =========================================================
+   3. Job Feed & Pipeline Grid (2-Column Responsive)
+   ========================================================= */
+#recruitment-feed, #recruitment-matches, #recruitment-jobs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 500px), 1fr));
+  gap: 24px;
+}
+
+/* Jobs tab: single-column vertical list with full-width cards */
+#recruitment-jobs {
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Job Feed Pagination */
+#recruitment-opportunities .actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+#recruitment-feed-page {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   4. Structured Modern Jobsite Card Layout
+   ========================================================= */
+.recruitment-job, .recruitment-match {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow-wrap: anywhere;
+  min-width: 0;
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease, opacity .4s ease, filter .4s ease;
+  position: relative;
+}
+.recruitment-job:hover, .recruitment-match:hover {
+  border-color: #7dd3fc;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Top Status Pill */
+.recruitment-job > .pill:first-child {
+  align-self: flex-start;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+/* Job Title & Company */
+.recruitment-job > h4 {
+  font-size: 20px;
+  font-weight: 750;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+.recruitment-job > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 14.5px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Metadata Tag Line (Role · Mode · Location) */
+.recruitment-job > p.muted {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  padding: 6px 12px;
+  background: var(--canvas);
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  margin: 0 0 10px;
+}
+
+/* Compensation Pill Badge */
+.recruitment-salary {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 750;
+  font-size: 15.5px;
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid var(--success-border);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  margin: 2px 0 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Experience Label */
+.recruitment-job > p:not(.muted):not(.recruitment-salary) {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+/* Small Subheaders */
+.recruitment-job > small {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* Skill Chips */
+.recruitment-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 6px 0 10px;
+}
+.recruitment-tags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-soft-border);
+  font-size: 12px;
+  font-weight: 600;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  transition: all .14s ease;
+}
+.recruitment-tags span:hover {
+  background: #e0f2fe;
+}
+
+/* Collapsible Job Description */
+.recruitment-description {
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+.recruitment-description summary {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+/* Actions Row at bottom of card */
+.recruitment-job > .actions {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* JD Extraction Box */
+.recruitment-suggestion {
+  margin-top: 20px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--canvas);
+}
+.recruitment-suggestion h4 { margin-top: 0; }
+.recruitment-extracted {
+  display: grid;
+  grid-template-columns: minmax(130px, 1.2fr) minmax(0, 2fr);
+  gap: 12px 20px;
+  margin: 18px 0;
+  font-size: 14px;
+}
+.recruitment-extracted dt { color: var(--muted); font-weight: 500; }
+.recruitment-extracted dd { margin: 0; overflow-wrap: anywhere; font-weight: 700; color: var(--ink); }
+
+.recruitment-jd-warning {
+  padding: 14px 18px;
+  border-left: 4px solid var(--danger-ink);
+  background: var(--danger-bg);
+  color: var(--danger-ink);
+  border-radius: var(--radius-sm);
+  line-height: 1.65;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   4b. Match Mode — Split Layout + Dimmed Siblings
+   ========================================================= */
+
+/* Suggestion host: invisible by default, becomes the right column */
+.suggestion-host { min-width: 0; }
+.suggestion-host:empty { display: none; }
+
+/* Active job: 2-column split (job info left, candidate card right) */
+.recruitment-job.is-matching {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  column-gap: 28px;
+  align-items: start;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+  transform: none;
+}
+.recruitment-job.is-matching > * {
+  grid-column: 1;
+}
+.recruitment-job.is-matching > .suggestion-host {
+  grid-column: 2;
+  grid-row: 1 / span 30;
+  position: sticky;
+  top: 130px;
+  align-self: start;
+}
+
+/* In matching context: candidate card fills the right column */
+.is-matching .recruitment-candidate {
+  margin: 0;
+  max-width: 100%;
+}
+.is-matching .candidate-status {
+  text-align: left;
+}
+.is-matching .candidate-empty {
+  margin-top: 0;
+}
+
+/* Dimmed sibling job cards */
+.recruitment-job.is-dimmed {
+  opacity: 0.3;
+  filter: blur(0.6px) saturate(0.5);
+  transform: scale(0.985);
+  pointer-events: auto;
+}
+.recruitment-job.is-dimmed:hover {
+  opacity: 0.7;
+  filter: none;
+  transform: scale(0.99);
+}
+.recruitment-job.is-dimmed:hover .actions button {
+  pointer-events: auto;
+}
+
+/* =========================================================
+   5. Tinder-Style Candidate Swipe Card
+   ========================================================= */
+
+/* --- Card shell: fixed-height deck card with soft shadow --- */
+.recruitment-candidate {
+  max-width: 480px;
+  width: 100%;
+  height: 640px;
+  max-height: 82vh;
+  margin: 24px auto 0;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: none;
+  box-shadow:
+    0 24px 48px -16px rgba(15, 23, 42, 0.14),
+    0 8px 20px -8px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(15, 23, 42, 0.06);
+  animation: tinder-card-enter .38s cubic-bezier(.16, 1, .3, 1) both;
+  position: relative;
+}
+@keyframes tinder-card-enter {
+  from { opacity: 0; transform: scale(0.92) translateY(24px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* --- Hero gradient header with avatar + name overlay --- */
+.candidate-header {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 28px 24px 20px;
+  background: linear-gradient(135deg, #0369a1 0%, #1e40af 50%, #4338ca 100%);
+  flex-shrink: 0;
+}
+.candidate-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+.candidate-identity { flex: 1; min-width: 0; }
+#recruitment-panel .candidate-name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+  color: #ffffff;
+}
+.candidate-role {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Match Score — floating pill at top-right of hero */
+.candidate-badge {
+  position: absolute !important;
+  top: 14px;
+  right: 16px;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  padding: 5px 14px !important;
+  border-radius: var(--radius-full) !important;
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* --- Facts strip: compact 4-column grid --- */
+.candidate-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--line);
+  flex-shrink: 0;
+}
+.candidate-facts > div {
+  min-width: 0;
+  padding: 12px 14px;
+  background: var(--canvas);
+  text-align: center;
+}
+.candidate-facts dt {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.candidate-facts dd {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 750;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+/* --- Scrollable card body --- */
+.candidate-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 22px;
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.12) transparent;
+  align-items: stretch;
+}
+.candidate-body::-webkit-scrollbar { width: 5px; }
+.candidate-body::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.14);
+  border-radius: 99px;
+}
+.candidate-profile, .candidate-fit { min-width: 0; }
+
+#recruitment-panel .candidate-body :is(h5, h6) {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+.candidate-profile > .preserve {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.candidate-summary { margin-bottom: 16px; }
+.candidate-summary summary {
+  font-size: 13px;
+}
+
+/* Match Fit Container — compact card-in-card */
+.candidate-fit {
+  padding: 16px 18px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.candidate-fit > p { font-size: 12.5px; margin: 0 0 10px; line-height: 1.5; }
+.candidate-score {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.candidate-fit meter {
+  width: 100%;
+  height: 8px;
+  margin-bottom: 12px;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.candidate-fit details summary {
+  font-size: 12.5px;
+}
+.candidate-fit .recruitment-extracted {
+  font-size: 12.5px;
+  gap: 8px 14px;
+}
+
+/* Suitability Reasons — compact list */
+.candidate-reasons {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: grid;
+  gap: 6px;
+}
+.candidate-reasons li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.candidate-reasons li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--success);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* Amber Alert for Gaps */
+.candidate-gaps {
+  list-style: none;
+  padding: 12px 14px;
+  margin: 6px 0 10px;
+  background: var(--warning-soft);
+  border: 1px solid var(--warning-border);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 6px;
+}
+.candidate-gaps li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #92400e;
+  overflow-wrap: anywhere;
+}
+.candidate-gaps li::before {
+  content: '⚠';
+  position: absolute;
+  left: 2px;
+  color: var(--warning);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Required Skill Match Highlight */
+.candidate-skill-required {
+  border-color: #60a5fa !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  font-weight: 700 !important;
+}
+.candidate-skill-required small {
+  font-size: inherit;
+  color: inherit;
+  font-weight: 700;
+}
+
+/* --- Tinder floating action footer with ♥ / ✕ buttons --- */
+.candidate-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 22px 18px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.candidate-privacy {
+  text-align: center;
+  max-width: 380px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+  order: 2;
+}
+#recruitment-panel .candidate-footer .actions {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  order: 1;
+}
+/* Connect / Like button — green gradient with heart */
+#recruitment-panel .candidate-footer .actions button:first-child {
+  flex: 1;
+  max-width: 220px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14.5px;
+  border: none;
+  box-shadow: 0 6px 20px -4px rgba(16, 185, 129, 0.4);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+#recruitment-panel .candidate-footer .actions button:first-child::before {
+  content: "♥ ";
+}
+#recruitment-panel .candidate-footer .actions button:first-child:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 28px -4px rgba(16, 185, 129, 0.5);
+}
+#recruitment-panel .candidate-footer .actions button:first-child:active {
+  transform: scale(0.97);
+}
+/* Pass / Next button — outlined with ✕ */
+#recruitment-panel .candidate-footer .actions button:last-child {
+  flex: 1;
+  max-width: 220px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 14px;
+  border: 1.5px solid var(--line-strong);
+  box-shadow: none;
+  transition: transform .16s ease, border-color .16s ease, color .16s ease;
+}
+#recruitment-panel .candidate-footer .actions button:last-child::before {
+  content: "✕ ";
+  font-weight: 800;
+}
+#recruitment-panel .candidate-footer .actions button:last-child:hover {
+  transform: scale(1.04);
+  border-color: #f87171;
+  color: #ef4444;
+}
+#recruitment-panel .candidate-footer .actions button:last-child:active {
+  transform: scale(0.97);
+}
+
+/* Status / loading message */
+.candidate-status {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+/* Empty state (no more candidates) */
+.candidate-empty {
+  margin-top: 16px;
+  padding: 36px 24px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--canvas);
+  text-align: center;
+}
+.candidate-empty h4 { margin-top: 0; font-size: 18px; }
+.candidate-empty button { margin-top: 12px; }
+
+/* --- Pipeline Match Card: remove fixed height so it flows naturally --- */
+.recruitment-match .recruitment-candidate {
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  animation: none;
+}
+.recruitment-match .candidate-header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #0369a1 0%, #1e40af 100%);
+}
+.recruitment-match .candidate-body {
+  overflow-y: visible;
+  padding: 16px;
+}
+.recruitment-match .candidate-badge {
+  position: static !important;
+  top: auto; right: auto;
+}
+#recruitment-panel .recruitment-match .candidate-name { font-size: 18px; }
+
+/* Markdown & Description in JD */
+.recruitment-markdown-preview {
+  margin: 16px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0 18px;
+  background: var(--canvas);
+}
+.jd-markdown {
+  font-size: 14.5px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+.jd-markdown p { white-space: pre-line; margin: 12px 0; }
+#recruitment-panel .jd-markdown :is(h5, h6) { margin: 20px 0 10px; line-height: 1.4; font-weight: 700; }
+#recruitment-panel .jd-markdown h5 { font-size: 18px; }
+#recruitment-panel .jd-markdown h6 { font-size: 16px; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.jd-markdown :is(ul, ol) { padding-left: 24px; margin: 12px 0; }
+.jd-markdown li { margin: 6px 0; }
+.jd-markdown blockquote {
+  margin: 14px 0;
+  padding: 10px 16px;
+  border-left: 4px solid var(--accent);
+  background: var(--canvas);
+  color: var(--muted);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.jd-markdown code {
+  font-family: Consolas, monospace;
+  font-size: .9em;
+  background: var(--canvas);
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+/* =========================================================
+   6. Recruitment Messenger & Interview Scheduler Layout
+   ========================================================= */
+#recruitment-conversation {
+  scroll-margin-top: 24px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  background: var(--surface);
+}
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+.chat-identity { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.chat-avatar {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 17px;
+  box-shadow: var(--shadow-xs);
+}
+#recruitment-panel .chat-header h3 { font-size: 18px; line-height: 1.35; margin: 0; overflow-wrap: anywhere; }
+.chat-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--accent); margin: 0 0 3px; }
+#recruitment-conversation-context { font-size: 13.5px; line-height: 1.5; margin: 3px 0 0; color: var(--muted); overflow-wrap: anywhere; }
+
+.chat-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 340px); }
+.chat-main { min-width: 0; display: flex; flex-direction: column; background: var(--canvas); }
+#recruitment-messages {
+  height: clamp(300px, 50dvh, 480px);
+  overflow: auto;
+  padding: 20px 24px;
+  scrollbar-gutter: stable;
+}
+.chat-day {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 14px 0 18px;
+}
+
+/* Chat Speech Bubbles */
+.recruitment-message {
+  width: fit-content;
+  max-width: 82%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px 14px 14px 3px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  box-shadow: var(--shadow-xs);
+  overflow-wrap: anywhere;
+}
+.recruitment-message.mine {
+  margin-left: auto;
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-border);
+  border-radius: 14px 14px 3px 14px;
+}
+.chat-message-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.chat-message-meta strong { font-weight: 600; color: var(--ink); }
+.chat-message-meta time { font-variant-numeric: tabular-nums; }
+#recruitment-panel .recruitment-message p { margin: 6px 0 0; font-size: 14px; line-height: 1.6; }
+
+/* Chat Input Bar */
+#recruitment-panel .chat-composer {
+  max-width: none;
+  padding: 14px 20px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  margin: 0;
+}
+.chat-composer > label { font-size: 12px; color: var(--muted); margin: 0 0 6px; }
+.chat-compose-row { display: flex; align-items: flex-end; gap: 10px; }
+#recruitment-panel .chat-compose-row textarea {
+  margin: 0;
+  min-height: 52px;
+  max-height: 140px;
+  padding: 10px 14px;
+  flex: 1;
+}
+.chat-compose-row button { min-height: 48px; min-width: 72px; margin: 0; }
+
+/* Interview Sidebar */
+.chat-sidebar {
+  min-width: 0;
+  padding: 16px 20px;
+  border-left: 1px solid var(--line);
+  max-height: 640px;
+  overflow: auto;
+  background: var(--surface);
+}
+.chat-sidebar a { display: block; font-size: 14px; overflow-wrap: anywhere; margin: 0 0 12px; }
+.chat-contact { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+#recruitment-panel .chat-sidebar summary { font-size: 14px; font-weight: 600; min-height: 44px; line-height: 1.5; padding: 10px 0; color: var(--accent); }
+#recruitment-interview-count { font-size: 11px; margin-left: 6px; padding: 2px 7px; border-radius: 99px; }
+
+.chat-interview {
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--canvas);
+}
+#recruitment-panel .chat-interview p { font-size: 13px; line-height: 1.6; margin: 6px 0; }
+.chat-interview time { font-size: 13.5px; font-weight: 700; color: var(--ink); line-height: 1.6; }
+.chat-interview .pill { font-size: 11px; padding: 3px 8px; margin-bottom: 6px; }
+#recruitment-panel .chat-interview .actions { margin: 10px 0 0; gap: 8px; }
+.chat-interview button { min-height: 38px; padding: 6px 12px; font-size: 13px; }
+
+.chat-interview-compose {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+#recruitment-panel .chat-interview-compose label { font-size: 13px; margin: 0 0 10px; }
+#recruitment-panel .chat-interview-compose input,
+#recruitment-panel .chat-interview-compose textarea { padding: 8px 12px; margin-top: 4px; font-size: 14px; }
+#recruitment-panel .chat-interview-compose form > button { margin-top: 12px; width: 100%; min-height: 44px; }
+.chat-help { font-size: 12px; line-height: 1.6; margin: 10px 0 0; color: var(--muted); }
+
+/* Responsive Adjustments */
+@media (max-width: 1040px) {
+  .candidate-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chat-layout { grid-template-columns: minmax(0, 1fr); }
+  .chat-sidebar { border-left: 0; border-top: 1px solid var(--line); max-height: none; }
+
+  /* Stack the split layout on narrower screens */
+  .recruitment-job.is-matching {
+    grid-template-columns: 1fr;
+  }
+  .recruitment-job.is-matching > .suggestion-host {
+    grid-column: 1;
+    grid-row: auto;
+    position: static;
+    margin-top: 20px;
+  }
+  .is-matching .recruitment-candidate {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1100px) {
+  #recruitment-feed, #recruitment-matches, #recruitment-jobs { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .recruitment-candidate {
+    max-width: 100%;
+    height: auto;
+    max-height: none;
+    border-radius: 18px;
+    margin: 16px 0 0;
+  }
+  .candidate-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .candidate-facts > div { padding: 10px 12px; }
+  .candidate-header { padding: 22px 18px 16px; }
+  .candidate-body { padding: 16px; overflow-y: visible; }
+  .candidate-footer { padding: 14px 16px 16px; }
+  #recruitment-panel .candidate-footer .actions { flex-direction: column; gap: 10px; }
+  #recruitment-panel .candidate-footer .actions button:first-child,
+  #recruitment-panel .candidate-footer .actions button:last-child { max-width: 100%; }
+  .recruitment-tabs button { flex: 1 1 45%; font-size: 13.5px; }
+  .recruitment-intro { padding: 22px !important; }
+  .recruitment-job, .recruitment-match, .recruitment-suggestion { padding: 18px; }
+  #recruitment-panel .candidate-name { font-size: 19px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #recruitment-panel * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

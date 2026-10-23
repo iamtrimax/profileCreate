@@ -34,8 +34,8 @@ class RecruitmentSeedTests {
     @MockitoBean RateLimiter limiter;
     @BeforeEach void limits() {when(limiter.allow(anyString(),anyInt(),anyInt())).thenReturn(true);}
     @Test void fixturesIncludeLoginAccountsPipelineChatInterviewsAndExistingFeatures() throws Exception {
-        assertEquals(16,jdbc.queryForObject("select count(*) from accounts where email like 'demo_%@linkhub.test'",Integer.class));
-        assertEquals(14,jdbc.queryForObject("select count(*) from candidate_profiles c join accounts a on a.id=c.owner_id where a.email like 'demo_%@linkhub.test'",Integer.class));
+        assertEquals(146,jdbc.queryForObject("select count(*) from accounts where email like 'demo_%@linkhub.test'",Integer.class));
+        assertEquals(134,jdbc.queryForObject("select count(*) from candidate_profiles c join accounts a on a.id=c.owner_id where a.email like 'demo_%@linkhub.test'",Integer.class));
         assertTrue(encoder.matches(RecruitmentSeedService.PASSWORD,jdbc.queryForObject("select password_hash from accounts where id=?",String.class,id("account:tech"))));
         mvc.perform(post("/api/auth/login").with(csrf()).contentType("application/json").content("{\"email\":\"demo_recruiter@linkhub.test\",\"password\":\"LinkHubDemo!2026\"}")).andExpect(status().isOk()).andExpect(jsonPath("$.username").value("demo_recruiter"));
         assertEquals(5,recruitment.jobs(id("account:tech")).size());
@@ -54,7 +54,20 @@ class RecruitmentSeedTests {
         jdbc.update("update candidate_profiles set seeking=false,summary='User edited' where owner_id=?",candidate);
         recruitment.reply(id("account:bao"),id("match:pending"),MatchStatus.DECLINED);
         recruitment.interviewReply(id("account:an"),id("match:accepted"),id("interview:pending"),InterviewStatus.CANCELLED);
+        int accountsBefore=jdbc.queryForObject("select count(*) from accounts",Integer.class);
+        int jobsBefore=jdbc.queryForObject("select count(*) from recruitment_jobs",Integer.class);
+        int candidatesBefore=jdbc.queryForObject("select count(*) from candidate_profiles",Integer.class);
+        UUID expandedCandidate=id("account:frontend_01"),expandedJob=id("job:frontend-24");
+        jdbc.update("update candidate_profiles set summary='Edited expanded profile',seeking=false where owner_id=?",expandedCandidate);
+        jdbc.update("update recruitment_jobs set open=false where id=?",expandedJob);
         var result=seed.seed();assertEquals(0,result.accountsCreated());
+        assertEquals(146,result.accountsTotal());assertEquals(246,result.jobsTotal());
+        assertEquals(accountsBefore,jdbc.queryForObject("select count(*) from accounts",Integer.class));
+        assertEquals(jobsBefore,jdbc.queryForObject("select count(*) from recruitment_jobs",Integer.class));
+        assertEquals(candidatesBefore,jdbc.queryForObject("select count(*) from candidate_profiles",Integer.class));
+        assertEquals("Edited expanded profile",recruitment.candidate(expandedCandidate).summary());
+        assertFalse(recruitment.candidate(expandedCandidate).seeking());
+        assertFalse(recruitment.jobs(id("account:recruiter_frontend")).stream().filter(j->j.id().equals(expandedJob)).findFirst().orElseThrow().open());
         assertFalse(recruitment.jobs(recruiter).stream().filter(j->j.id().equals(id("job:java-live"))).findFirst().orElseThrow().open());
         assertFalse(recruitment.candidate(candidate).seeking());assertEquals("User edited",recruitment.candidate(candidate).summary());
         assertEquals("DECLINED",jdbc.queryForObject("select status from recruitment_matches where id=?",String.class,id("match:pending")));
@@ -62,6 +75,21 @@ class RecruitmentSeedTests {
         assertEquals(originalHash,jdbc.queryForObject("select password_hash from accounts where id=?",String.class,recruiter));
         assertEquals(2,recruitment.messages(recruiter,id("match:accepted")).size());
         assertEquals(3,jdbc.queryForObject("select count(*) from notifications where event_key like 'demo:recruitment:%'",Integer.class));
+    }
+    @Test void expandedTracksHaveJobsAndDiscoverableCandidates() {
+        for (String track : List.of("frontend","node","python","mobile","qa","devops","data","ba","product","security")) {
+            UUID recruiter=id("account:recruiter_"+track);
+            assertEquals(24,recruitment.jobs(recruiter).size());
+            assertEquals(24,recruitment.jobs(recruiter).stream().map(Job::title).distinct().count());
+            for (int index=1;index<=24;index++) {
+                var suggestion=recruitment.discover(recruiter,id("job:"+track+"-"+index),null);
+                assertNotNull(suggestion,track+" job "+index);
+                assertTrue(suggestion.candidate().seeking());
+                assertEquals(recruitment.candidate(id("account:"+track+"_01")).desiredRole(),suggestion.candidate().desiredRole());
+            }
+            assertFalse(recruitment.candidate(id("account:"+track+"_12")).seeking());
+        }
+        assertEquals(246,jdbc.queryForObject("select count(*) from recruitment_jobs j join accounts a on a.id=j.owner_id where a.email like 'demo_%@linkhub.test'",Integer.class));
     }
     @Test void demoJobsExerciseFilteringAndNextWithoutRepeats() {
         UUID recruiter=id("account:tech"),job=id("job:java-live");
